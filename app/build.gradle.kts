@@ -79,4 +79,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     // Coil
     implementation("io.coil-kt:coil-compose:2.5.0")
+
+    // Navigation Compose
+    implementation("androidx.navigation:navigation-compose:2.7.6")
 }
