@@ -2,8 +2,6 @@
 name: Discord Message Notify
 
 on:
-  push:
-    branches: [ develop ]
   pull_request:
     branches: [ develop ]
 
@@ -18,4 +16,6 @@ jobs:
         webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
         color: "#48f442"
         username: "GitHub Bot"
-        args: The ${{ github.event_name }} event triggered.
+        title: "${{ github.event.pull_request.title }}"
+        description: "${{ github.event.pull_request.body }}"
+        url: "${{ github.event.pull_request.html_url }}"
