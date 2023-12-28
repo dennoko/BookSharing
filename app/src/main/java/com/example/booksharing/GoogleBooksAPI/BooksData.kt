@@ -21,8 +21,15 @@ data class VolumeInfo(
     val publisher: String,
     val publishedDate: String,
     val description: String,
+    val industryIdentifiers: List<IndustryIdentifier>,
     val categories: List<String>,
     val imageLinks: ImageLinks
+)
+
+@Serializable
+data class IndustryIdentifier(
+    val type: String,
+    val identifier: String
 )
 
 @Serializable
