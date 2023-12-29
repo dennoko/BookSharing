@@ -1,5 +1,7 @@
 package com.example.booksharing.firestore
 
+import com.example.booksharing.GoogleBooksAPI.Item
+
 data class detaildata(
     var isbooked:Boolean,
     var borrower:String,
@@ -9,4 +11,9 @@ data class detaildata(
     var tag3:String,
     var tag4:String,
     var tag5:String
+)
+
+data class detailforapi(
+    var detail:detaildata,
+    var item:Item
 )
