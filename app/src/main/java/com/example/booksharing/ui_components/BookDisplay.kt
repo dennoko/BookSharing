@@ -7,20 +7,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import com.example.booksharing.testData.TestBooksData
 
 @Composable
-fun BookDisplay(title: String) {
+fun BookDisplay(testData: TestBooksData) {
     /*
     このコンポーザブルは、ホーム画面に本を表示するためのコンポーザブルです。
      */
     Column {
-        Card(
-            modifier = Modifier
-                .size(60.dp, 100.dp)
-        ){
-            Text(text = "Image")
-        }
+        // 本の画像を表示
+        AsyncImage(model = testData.item.volumeInfo.imageLinks.thumbnail, contentDescription = null)
 
-        Text(text = title)
+        Text(text = testData.item.volumeInfo.title)
     }
 }
