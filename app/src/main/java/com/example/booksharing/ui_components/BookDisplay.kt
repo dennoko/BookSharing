@@ -13,7 +13,7 @@ import com.example.booksharing.testData.TestBooksData
 @Composable
 fun BookDisplay(testData: TestBooksData) {
     /*
-    このコンポーザブルは、ホーム画面に本を表示するためのコンポーザブルです。
+    このコンポーザブルは、ホーム画面に本を表示するためのコンポーザブルです。hello
      */
     Column {
         // 本の画像を表示
