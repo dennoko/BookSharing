@@ -21,10 +21,14 @@ import androidx.navigation.compose.rememberNavController
 import com.example.booksharing.screen.HomeScreen
 import com.example.booksharing.ui.theme.BookSharingTheme
 import com.example.booksharing.ui_components.NavigationBar
+import com.google.firebase.Firebase
+import com.google.firebase.FirebaseApp
+import com.google.firebase.firestore.firestore
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             val navController = rememberNavController()
 

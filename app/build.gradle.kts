@@ -80,13 +80,14 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     // Coil
     implementation("io.coil-kt:coil-compose:2.5.0")
+    // viewmodel compose
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
 
     // Navigation Compose
     implementation("androidx.navigation:navigation-compose:2.7.6")
 
     // Import the Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
-    // TODO: Add the dependencies for Firebase products you want to use
-    // When using the BoM, don't specify versions in Firebase dependencies
-    implementation("com.google.firebase:firebase-analytics")
+    // Firestore
+    implementation("com.google.firebase:firebase-firestore")
 }

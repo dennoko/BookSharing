@@ -15,10 +15,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class HomeViewModel: ViewModel() {
-    // Firestore
-    val db = Firebase.firestore
     // Repository
     val managedata = Managedata()
+    // Firestore
+    val db = Firebase.firestore
 
     // test data TODO: replace with actual data
     private var _booksList = MutableStateFlow<List<TestBooksData>>(emptyList())

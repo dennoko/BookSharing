@@ -24,10 +24,13 @@ import com.example.booksharing.firestore.detailforapi
 import com.example.booksharing.ui.theme.BookSharingTheme
 import com.example.booksharing.ui_components.BookDisplay
 import com.google.common.collect.ImmutableList
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(vm: HomeViewModel = viewModel()) {
+    Log.d("hoge", "Enter HomeScreen")
     /*
     この画面がアプリのホーム画面になります。
     kindleのように、firebaseから取得した本の情報を表示できるようにしましょう。
@@ -41,6 +44,7 @@ fun HomeScreen(vm: HomeViewModel = viewModel()) {
         // 本の情報を更新
         LaunchedEffect(Unit) {
             vm.getBooksTest()
+            Log.d("hoge", "HomeScreen LaunchedEffect vm.getBooksTest()")
         }
 
         // ここに検索ボックスを作成します。
@@ -62,6 +66,7 @@ fun HomeScreen(vm: HomeViewModel = viewModel()) {
                 LaunchedEffect(Unit) {
                     coroutineScope.launch {
                         booksData.value = vm.getBooks(tags[it])
+                        Log.d("hoge", "HomeScreen LaunchedEffect vm.getBooks(tags[it]): ${vm.getBooks(tags[it])}")
                     }
                 }
 
