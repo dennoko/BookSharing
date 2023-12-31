@@ -5,8 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.booksharing.firestore.Managedata
 import com.example.booksharing.firestore.detailforapi
 import com.example.booksharing.testData.TestBooksData
+import com.google.common.collect.ImmutableList
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -34,16 +36,9 @@ class HomeViewModel: ViewModel() {
         }
     }
 
-    // 本を取得する関数. 取得したデータは StateFlow で返す
-    var _booksData = MutableStateFlow<List<detailforapi>> (emptyList())
-    val booksData = _booksData.asStateFlow()
-
-    fun getBooks(tag: String) {
-        // booksData の初期化
-        _booksData.value = emptyList()
-
-        viewModelScope.launch {
-            _booksData.value = managedata.getbookbytag(db, tag)
-        }
+    // 本を取得する関数. 取得したデータはListで返す.
+    suspend fun getBooks(tag: String): ImmutableList<detailforapi> {
+        val booksData = viewModelScope.async { managedata.getbookbytag(db, tag) }.await()
+        return booksData
     }
 }
