@@ -10,7 +10,7 @@ import kotlinx.coroutines.tasks.await
 
 import java.lang.Exception
 
-class managedata {
+class Managedata {
     //本を追加
     fun registbook(owner:String,isbn:String, tag1:String = "", tag2:String = "", tag3:String = "", tag4:String = "", tag5:String = "", db:FirebaseFirestore){
         val book= hashMapOf(
