@@ -15,6 +15,7 @@ class managedata {
     fun registbook(owner:String,isbn:String, tag1:String = "", tag2:String = "", tag3:String = "", tag4:String = "", tag5:String = "", db:FirebaseFirestore){
         val book= hashMapOf(
             "isbooked" to false,
+            "owner" to owner,
             "borrower" to "",
             "isbn" to isbn,
             "tag1" to tag1,
@@ -40,100 +41,28 @@ class managedata {
         val booklist= mutableListOf<detailforapi>()
         var tmp:BooksData
         try{
-            val result1=db.collection("C0de").whereEqualTo("tag1",tag).get().await()
-            val result2=db.collection("C0de").whereEqualTo("tag2",tag).get().await()
-            val result3=db.collection("C0de").whereEqualTo("tag3",tag).get().await()
-            val result4=db.collection("C0de").whereEqualTo("tag4",tag).get().await()
-            val result5=db.collection("C0de").whereEqualTo("tag5",tag).get().await()
-            for (document in result1) {
-                tmp=searchBooks((document.data["isbn"]).toString())
-                booklist.add(
-                    detailforapi(
-                        detaildata(
-                            isbooked = document.data["isbooked"] as Boolean,
-                            borrower = document.data["borrower"] as String,
-                            isbn = document.data["isbn"] as String,
-                            tag1 = document.data["tag1"] as String,
-                            tag2 = document.data["tag2"] as String,
-                            tag3 = document.data["tag3"] as String,
-                            tag4 = document.data["tag4"] as String,
-                            tag5 = document.data["tag5"] as String
-                        ),
-                        tmp.items[0]
+            for (i in 1..5){
+                val tagNum="tag${i}"
+                val result = db.collection("C0de").whereEqualTo("${tagNum}", tag).get().await()
+                for (document in result) {
+                    tmp = searchBooks((document.data["isbn"]).toString())
+                    booklist.add(
+                        detailforapi(
+                            detaildata(
+                                isbooked = document.data["isbooked"] as Boolean,
+                                owner = document.data["owner"] as String,
+                                borrower = document.data["borrower"] as String,
+                                isbn = document.data["isbn"] as String,
+                                tag1 = document.data["tag1"] as String,
+                                tag2 = document.data["tag2"] as String,
+                                tag3 = document.data["tag3"] as String,
+                                tag4 = document.data["tag4"] as String,
+                                tag5 = document.data["tag5"] as String
+                            ),
+                            tmp.items[0]
+                        )
                     )
-                )
-            }
-            for (document in result2) {
-                tmp=searchBooks((document.data["isbn"]).toString())
-                booklist.add(
-                    detailforapi(
-                        detaildata(
-                            isbooked = document.data["isbooked"] as Boolean,
-                            borrower = document.data["borrower"] as String,
-                            isbn = document.data["isbn"] as String,
-                            tag1 = document.data["tag1"] as String,
-                            tag2 = document.data["tag2"] as String,
-                            tag3 = document.data["tag3"] as String,
-                            tag4 = document.data["tag4"] as String,
-                            tag5 = document.data["tag5"] as String
-                        ),
-                        tmp.items[0]
-                    )
-                )
-            }
-            for (document in result3) {
-                tmp=searchBooks((document.data["isbn"]).toString())
-                booklist.add(
-                    detailforapi(
-                        detaildata(
-                            isbooked = document.data["isbooked"] as Boolean,
-                            borrower = document.data["borrower"] as String,
-                            isbn = document.data["isbn"] as String,
-                            tag1 = document.data["tag1"] as String,
-                            tag2 = document.data["tag2"] as String,
-                            tag3 = document.data["tag3"] as String,
-                            tag4 = document.data["tag4"] as String,
-                            tag5 = document.data["tag5"] as String
-                        ),
-                        tmp.items[0]
-                    )
-                )
-            }
-            for (document in result4) {
-                tmp=searchBooks((document.data["isbn"]).toString())
-                booklist.add(
-                    detailforapi(
-                        detaildata(
-                            isbooked = document.data["isbooked"] as Boolean,
-                            borrower = document.data["borrower"] as String,
-                            isbn = document.data["isbn"] as String,
-                            tag1 = document.data["tag1"] as String,
-                            tag2 = document.data["tag2"] as String,
-                            tag3 = document.data["tag3"] as String,
-                            tag4 = document.data["tag4"] as String,
-                            tag5 = document.data["tag5"] as String
-                        ),
-                        tmp.items[0]
-                    )
-                )
-            }
-            for (document in result5) {
-                tmp=searchBooks((document.data["isbn"]).toString())
-                booklist.add(
-                    detailforapi(
-                        detaildata(
-                            isbooked = document.data["isbooked"] as Boolean,
-                            borrower = document.data["borrower"] as String,
-                            isbn = document.data["isbn"] as String,
-                            tag1 = document.data["tag1"] as String,
-                            tag2 = document.data["tag2"] as String,
-                            tag3 = document.data["tag3"] as String,
-                            tag4 = document.data["tag4"] as String,
-                            tag5 = document.data["tag5"] as String
-                        ),
-                        tmp.items[0]
-                    )
-                )
+                }
             }
 
         }catch(e:Exception){

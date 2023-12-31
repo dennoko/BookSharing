@@ -4,6 +4,7 @@ import com.example.booksharing.GoogleBooksAPI.Item
 
 data class detaildata(
     var isbooked:Boolean,
+    var owner:String,
     var borrower:String,
     var isbn:String,
     var tag1:String,
