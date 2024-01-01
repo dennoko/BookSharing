@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "125910153517",
-    "project_id": "booksharingfirebasetest",
-    "storage_bucket": "booksharingfirebasetest.appspot.com"
+    "project_number": "308137432840",
+    "project_id": "test-project-14e35",
+    "storage_bucket": "test-project-14e35.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:125910153517:android:68ba6e3eb22c339fc47ba4",
+        "mobilesdk_app_id": "1:308137432840:android:adf7460c85c5c396effebd",
         "android_client_info": {
           "package_name": "com.example.booksharing"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC9wxxzL4ju0HdKC7YyF-OAxtkbn7NwoUQ"
+          "current_key": "AIzaSyBt1I2a5Ap-5cF6ZTux0YdCVfhTiKfn-fA"
         }
       ],
       "services": {
