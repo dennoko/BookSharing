@@ -3,8 +3,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
     // kotlin-serialization
     id("kotlinx-serialization")
-    // google-services
-    id("com.google.gms.google-services")
+    // google services
+    id("com.google.gms.google-services") // これ追加
 }
 
 android {

@@ -21,12 +21,15 @@ import androidx.navigation.compose.rememberNavController
 import com.example.booksharing.screen.HomeScreen
 import com.example.booksharing.ui.theme.BookSharingTheme
 import com.example.booksharing.ui_components.NavigationBar
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
+            val db = Firebase.firestore
 
             BookSharingTheme {
                 // A surface container using the 'background' color from the theme
