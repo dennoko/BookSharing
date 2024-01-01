@@ -3,6 +3,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
     // kotlin-serialization
     id("kotlinx-serialization")
+    // google services
+    id("com.google.gms.google-services") // これ追加
 }
 
 android {
@@ -84,9 +86,11 @@ dependencies {
     // Navigation Compose
     implementation("androidx.navigation:navigation-compose:2.7.6")
 
+    // viewmodel compose
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2") // これ追加
+
     // Import the Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
-    // TODO: Add the dependencies for Firebase products you want to use
-    // When using the BoM, don't specify versions in Firebase dependencies
-    implementation("com.google.firebase:firebase-analytics")
+    // analytics は今回は使わないと思うので削除
+    implementation("com.google.firebase:firebase-firestore") // 追加したが解決せず
 }
