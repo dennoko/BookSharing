@@ -5,12 +5,13 @@ import android.widget.Toast
 import com.example.booksharing.GoogleBooksAPI.BooksData
 import com.example.booksharing.GoogleBooksAPI.Item
 import com.example.booksharing.GoogleBooksAPI.RetrofitInstance
+import com.google.common.collect.ImmutableList
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
 import java.lang.Exception
 
-class managedata {
+class Managedata {
     //本を追加
     fun registbook(owner:String,isbn:String, tag1:String = "", tag2:String = "", tag3:String = "", tag4:String = "", tag5:String = "", db:FirebaseFirestore){
         val book= hashMapOf(
@@ -37,7 +38,7 @@ class managedata {
             }
     }
     //データを取得(タグ検索利用)
-    suspend fun getbookbytag(db:FirebaseFirestore,tag:String):List<detailforapi>{
+    suspend fun getbookbytag(db:FirebaseFirestore,tag:String): ImmutableList<detailforapi> {
         val booklist= mutableListOf<detailforapi>()
         var tmp:BooksData
         try{
@@ -68,7 +69,7 @@ class managedata {
         }catch(e:Exception){
             Log.d("error", "getbookbytag: error occured  ${e.message}  ${e.cause}")
         }
-        return booklist
+        return ImmutableList.copyOf(booklist)
     }
     //本を削除
     fun deletebook(db:FirebaseFirestore,collection:String, document:String,detail:detaildata,context:Context){
