@@ -24,8 +24,6 @@ import com.example.booksharing.firestore.detailforapi
 import com.example.booksharing.ui.theme.BookSharingTheme
 import com.example.booksharing.ui_components.BookDisplay
 import com.google.common.collect.ImmutableList
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 
 @Composable

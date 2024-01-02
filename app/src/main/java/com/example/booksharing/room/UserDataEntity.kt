@@ -5,7 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class UserDataEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    // データは1つなので、id は 0 で固定
+    @PrimaryKey val id: Int = 0,
     val UserName: String,
     val Organization: String = "C0de",
 )
