@@ -132,7 +132,7 @@ class ManageData {
                 }
             }
         } catch (e: Exception) {
-            Log.d("error", "getTagList: error occured  ${e.message}  ${e.cause}")
+            Log.d("error", "getTagList: error occurred  ${e.message}  ${e.cause}")
         }
         // 重複を削除
         tagList.distinct()

@@ -16,9 +16,9 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel: ViewModel() {
     // Firestore
-    val db = Firebase.firestore
+    private val db = Firebase.firestore
     // Repository
-    val managedata = ManageData()
+    private val manageData = ManageData()
 
     // test data TODO: replace with actual data
     private var _booksList = MutableStateFlow<List<TestBooksData>>(emptyList())
@@ -38,7 +38,7 @@ class HomeViewModel: ViewModel() {
 
     // 本を取得する関数. 取得したデータはListで返す.
     suspend fun getBooks(tag: String): ImmutableList<detailforapi> {
-        val booksData = viewModelScope.async { managedata.getBooksByTag(db, tag) }.await()
+        val booksData = viewModelScope.async { manageData.getBooksByTag(db, tag) }.await()
         return booksData
     }
 }
