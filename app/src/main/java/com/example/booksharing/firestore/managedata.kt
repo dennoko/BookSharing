@@ -118,7 +118,7 @@ class ManageData {
     }
 
     // tag1 から tag5 までのタグの値の種類のリストを返す関数
-    suspend fun getTagList(db: FirebaseFirestore): ImmutableList<String> {
+    suspend fun getTagsList(db: FirebaseFirestore): ImmutableList<String> {
         val tagList = mutableListOf<String>()
         try {
             val result = db.collection("C0de").get().await()
