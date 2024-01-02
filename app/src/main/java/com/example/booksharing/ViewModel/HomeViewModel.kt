@@ -2,7 +2,7 @@ package com.example.booksharing.ViewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.booksharing.firestore.Managedata
+import com.example.booksharing.firestore.ManageData
 import com.example.booksharing.firestore.detailforapi
 import com.example.booksharing.testData.TestBooksData
 import com.google.common.collect.ImmutableList
@@ -18,7 +18,7 @@ class HomeViewModel: ViewModel() {
     // Firestore
     val db = Firebase.firestore
     // Repository
-    val managedata = Managedata()
+    val managedata = ManageData()
 
     // test data TODO: replace with actual data
     private var _booksList = MutableStateFlow<List<TestBooksData>>(emptyList())
