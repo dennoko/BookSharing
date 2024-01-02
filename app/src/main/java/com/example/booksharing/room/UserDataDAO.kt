@@ -1,9 +1,11 @@
 package com.example.booksharing.room
 
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 
+@Dao
 interface UserDataDAO {
     // 初回設定時にユーザー名を登録する
     @Insert
