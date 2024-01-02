@@ -11,7 +11,7 @@ import kotlinx.coroutines.tasks.await
 
 import java.lang.Exception
 
-class Managedata {
+class ManageData {
     //本を追加
     fun registbook(owner:String,isbn:String, tag1:String = "", tag2:String = "", tag3:String = "", tag4:String = "", tag5:String = "", db:FirebaseFirestore){
         val book= hashMapOf(
@@ -44,7 +44,7 @@ class Managedata {
         try{
             for (i in 1..5){
                 val tagNum="tag${i}"
-                val result = db.collection("C0de").whereEqualTo("${tagNum}", tag).get().await()
+                val result = db.collection("C0de").whereEqualTo(tagNum, tag).get().await()
                 for (document in result) {
                     tmp = searchBooks((document.data["isbn"]).toString())
                     booklist.add(
@@ -71,6 +71,39 @@ class Managedata {
         }
         return ImmutableList.copyOf(booklist)
     }
+
+    // owner で本を検索する関数
+    suspend fun getBooksByOwner(db: FirebaseFirestore, owner: String): ImmutableList<detailforapi> {
+        val booklist = mutableListOf<detailforapi>()
+        var tmp: BooksData
+        try {
+            val result = db.collection("C0de").whereEqualTo("owner", owner).get().await()
+            for (document in result) {
+                tmp = searchBooks((document.data["isbn"]).toString())
+                booklist.add(
+                    detailforapi(
+                        detaildata(
+                            isbooked = document.data["isbooked"] as Boolean,
+                            owner = document.data["owner"] as String,
+                            borrower = document.data["borrower"] as String,
+                            isbn = document.data["isbn"] as String,
+                            tag1 = document.data["tag1"] as String,
+                            tag2 = document.data["tag2"] as String,
+                            tag3 = document.data["tag3"] as String,
+                            tag4 = document.data["tag4"] as String,
+                            tag5 = document.data["tag5"] as String
+                        ),
+                        tmp.items[0]
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            Log.d("error", "getbookbytag: error occured  ${e.message}  ${e.cause}")
+        }
+
+        return ImmutableList.copyOf(booklist)
+    }
+
     //本を削除
     fun deletebook(db:FirebaseFirestore,collection:String, document:String,detail:detaildata,context:Context){
         val bookRef=db.collection(collection).document(document)
