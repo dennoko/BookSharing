@@ -13,7 +13,7 @@ import java.lang.Exception
 
 class ManageData {
     //本を追加
-    fun registbook(owner:String,isbn:String, tag1:String = "", tag2:String = "", tag3:String = "", tag4:String = "", tag5:String = "", db:FirebaseFirestore){
+    fun registBook(owner:String,isbn:String, tag1:String = "", tag2:String = "", tag3:String = "", tag4:String = "", tag5:String = "", db:FirebaseFirestore){
         val book= hashMapOf(
             "isbooked" to false,
             "owner" to owner,
@@ -29,17 +29,17 @@ class ManageData {
         db.collection("C0de").document(owner+isbn)
             //非同期処理に成功したときの処理
             .set(book).addOnSuccessListener {
-                Log.d("methodtest","new bookdata added isbn:${isbn}")
+                Log.d("methodTest","new bookData added isbn:${isbn}")
             }
             //非同期処理に失敗したときの処理
             .addOnFailureListener {
                 e:Exception ->
-                Log.w("methodtest","error adding bookdata ${e.message} ${e.cause}")
+                Log.w("methodTest","error adding bookData ${e.message} ${e.cause}")
             }
     }
     //データを取得(タグ検索利用)
-    suspend fun getbookbytag(db:FirebaseFirestore,tag:String): ImmutableList<detailforapi> {
-        val booklist= mutableListOf<detailforapi>()
+    suspend fun getBooksByTag(db:FirebaseFirestore,tag:String): ImmutableList<detailforapi> {
+        val bookList= mutableListOf<detailforapi>()
         var tmp:BooksData
         try{
             for (i in 1..5){
@@ -47,7 +47,7 @@ class ManageData {
                 val result = db.collection("C0de").whereEqualTo(tagNum, tag).get().await()
                 for (document in result) {
                     tmp = searchBooks((document.data["isbn"]).toString())
-                    booklist.add(
+                    bookList.add(
                         detailforapi(
                             detaildata(
                                 isbooked = document.data["isbooked"] as Boolean,
@@ -67,9 +67,9 @@ class ManageData {
             }
 
         }catch(e:Exception){
-            Log.d("error", "getbookbytag: error occured  ${e.message}  ${e.cause}")
+            Log.d("error", "getBookByTag: error occurred  ${e.message}  ${e.cause}")
         }
-        return ImmutableList.copyOf(booklist)
+        return ImmutableList.copyOf(bookList)
     }
 
     // owner で本を検索する関数
@@ -105,15 +105,15 @@ class ManageData {
     }
 
     //本を削除
-    fun deletebook(db:FirebaseFirestore,collection:String, document:String,detail:detaildata,context:Context){
+    fun deleteBook(db:FirebaseFirestore,collection:String, document:String,detail:detaildata,context:Context){
         val bookRef=db.collection(collection).document(document)
         bookRef.delete()
             .addOnSuccessListener{
-                Toast.makeText(context,"Bookdata deleted",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context,"BookData deleted",Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener{e:Exception ->
                 Toast.makeText(context,"failed to delete",Toast.LENGTH_SHORT).show()
-                Log.d("methodtest","deletetag: error occured ${e.message} ${e.cause}")
+                Log.d("methodTest","deleteTag: error occurred ${e.message} ${e.cause}")
             }
     }
 
@@ -132,7 +132,7 @@ class ManageData {
                 }
             }
         } catch (e: Exception) {
-            Log.d("error", "getTagList: error occured  ${e.message}  ${e.cause}")
+            Log.d("error", "getTagList: error occurred  ${e.message}  ${e.cause}")
         }
         // 重複を削除
         tagList.distinct()
