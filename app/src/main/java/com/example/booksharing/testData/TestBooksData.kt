@@ -22,7 +22,7 @@ data class TestBooksData(
         selfLink = "https://www.googleapis.com/books/v1/volumes/OfN_7hj2t5wC",
         volumeInfo = VolumeInfo(
             title = "初めてのAndroid",
-            authors = listOf("エドバーネット"),
+            authors = listOf("エドバーネット", "あい"),
             publisher = "オライリー・ジャパン",
             publishedDate = "2009-05-15",
             description = "Androidの基本を学ぶための入門書。Androidの概要から、開発環境の構築、アプリケーションの開発、デバッグ、公開までを解説。Androidの基本を学ぶための入門書。Androidの概要から、開発環境の構築、アプリケーションの開発、デバッグ、公開までを解説。",
@@ -36,7 +36,7 @@ data class TestBooksData(
                     identifier = "9784873113933"
                 )
             ),
-            categories = listOf("Computers"),
+            categories = listOf("Computers", "C0de"),
             imageLinks = ImageLinks(
                 thumbnail = "http://books.google.com/books/content?id=OfN_7hj2t5wC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
             )

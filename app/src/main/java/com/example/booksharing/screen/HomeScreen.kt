@@ -23,10 +23,12 @@ import com.example.booksharing.ViewModel.HomeViewModel
 import com.example.booksharing.firestore.detailforapi
 import com.example.booksharing.ui.theme.BookSharingTheme
 import com.example.booksharing.ui_components.BookDisplay
+import com.example.booksharing.ui_components.SearchBox
 import com.google.common.collect.ImmutableList
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
+
 
 @Composable
 fun HomeScreen(vm: HomeViewModel = viewModel()) {
@@ -46,7 +48,7 @@ fun HomeScreen(vm: HomeViewModel = viewModel()) {
         }
 
         // ここに検索ボックスを作成します。
-
+        SearchBox()
 
         // ここから本の情報を表示
         // タグごとに表示するようするので LazyColumn にタグのリストを渡します。
