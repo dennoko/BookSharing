@@ -15,8 +15,8 @@ import kotlinx.coroutines.launch
 
 class MyBooksViewModel: ViewModel() {
     // Instance of ManageData
-    val manageData = ManageData()
-    val db = Firebase.firestore
+    private val manageData = ManageData()
+    private val db = Firebase.firestore
 
     // 書籍の検索キーワード
     var keyWord = mutableStateOf("")
