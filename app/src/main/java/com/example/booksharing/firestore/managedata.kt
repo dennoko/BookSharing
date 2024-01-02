@@ -117,6 +117,30 @@ class ManageData {
             }
     }
 
+    // tag1 から tag5 までのタグの値の種類のリストを返す関数
+    suspend fun getTagList(db: FirebaseFirestore): ImmutableList<String> {
+        val tagList = mutableListOf<String>()
+        try {
+            val result = db.collection("C0de").get().await()
+            for (document in result) {
+                for (i in 1..5) {
+                    val tagNum = "tag${i}"
+                    val tag = document.data[tagNum] as String
+                    if (tag != "") {
+                        tagList.add(tag)
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Log.d("error", "getTagList: error occured  ${e.message}  ${e.cause}")
+        }
+        // 重複を削除
+        tagList.distinct()
+        // ImmutableList に変換して返す
+        return ImmutableList.copyOf(tagList)
+    }
+
+
     // 以下はGoogle Books API 用の関数
     // Retrofit のインスタンスを作成
     private val apiService = RetrofitInstance.apiService
