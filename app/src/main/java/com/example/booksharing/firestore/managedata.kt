@@ -44,7 +44,7 @@ class ManageData {
         try{
             for (i in 1..5){
                 val tagNum="tag${i}"
-                val result = db.collection("C0de").whereEqualTo("${tagNum}", tag).get().await()
+                val result = db.collection("C0de").whereEqualTo(tagNum, tag).get().await()
                 for (document in result) {
                     tmp = searchBooks((document.data["isbn"]).toString())
                     bookList.add(
@@ -71,6 +71,39 @@ class ManageData {
         }
         return ImmutableList.copyOf(bookList)
     }
+
+    // owner で本を検索する関数
+    suspend fun getBooksByOwner(db: FirebaseFirestore, owner: String): ImmutableList<detailforapi> {
+        val booklist = mutableListOf<detailforapi>()
+        var tmp: BooksData
+        try {
+            val result = db.collection("C0de").whereEqualTo("owner", owner).get().await()
+            for (document in result) {
+                tmp = searchBooks((document.data["isbn"]).toString())
+                booklist.add(
+                    detailforapi(
+                        detaildata(
+                            isbooked = document.data["isbooked"] as Boolean,
+                            owner = document.data["owner"] as String,
+                            borrower = document.data["borrower"] as String,
+                            isbn = document.data["isbn"] as String,
+                            tag1 = document.data["tag1"] as String,
+                            tag2 = document.data["tag2"] as String,
+                            tag3 = document.data["tag3"] as String,
+                            tag4 = document.data["tag4"] as String,
+                            tag5 = document.data["tag5"] as String
+                        ),
+                        tmp.items[0]
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            Log.d("error", "getbookbytag: error occured  ${e.message}  ${e.cause}")
+        }
+
+        return ImmutableList.copyOf(booklist)
+    }
+
     //本を削除
     fun deleteBook(db:FirebaseFirestore,collection:String, document:String,detail:detaildata,context:Context){
         val bookRef=db.collection(collection).document(document)
@@ -83,6 +116,30 @@ class ManageData {
                 Log.d("methodTest","deleteTag: error occurred ${e.message} ${e.cause}")
             }
     }
+
+    // tag1 から tag5 までのタグの値の種類のリストを返す関数
+    suspend fun getTagList(db: FirebaseFirestore): ImmutableList<String> {
+        val tagList = mutableListOf<String>()
+        try {
+            val result = db.collection("C0de").get().await()
+            for (document in result) {
+                for (i in 1..5) {
+                    val tagNum = "tag${i}"
+                    val tag = document.data[tagNum] as String
+                    if (tag != "") {
+                        tagList.add(tag)
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Log.d("error", "getTagList: error occured  ${e.message}  ${e.cause}")
+        }
+        // 重複を削除
+        tagList.distinct()
+        // ImmutableList に変換して返す
+        return ImmutableList.copyOf(tagList)
+    }
+
 
     // 以下はGoogle Books API 用の関数
     // Retrofit のインスタンスを作成
