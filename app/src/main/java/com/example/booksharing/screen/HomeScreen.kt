@@ -19,6 +19,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.booksharing.ViewModel.HomeViewModel
 import com.example.booksharing.ui.theme.BookSharingTheme
 import com.example.booksharing.ui_components.BookDisplay
+import com.example.booksharing.ui_components.SearchBox
 
 @Composable
 fun HomeScreen(vm: HomeViewModel = viewModel()) {
@@ -36,7 +37,7 @@ fun HomeScreen(vm: HomeViewModel = viewModel()) {
         }
 
         // ここに検索ボックスを作成します。 BasicTextField を使って作ってみましょう。
-
+        SearchBox()
 
         // ここから本の情報を表示
         // タグごとに表示するようするので LazyColumn にタグのリストを渡します。

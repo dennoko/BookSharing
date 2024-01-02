@@ -2,6 +2,9 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="PreviewBookDisplayDetails">
+        <State />
+      </entry>
       <entry key="app">
         <State>
           <targetSelectedWithDropDown>
@@ -10,12 +13,12 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\dennn\.android\avd\Pixel_7_Pro_API_33.avd" />
+                  <value value="C:\Users\HibikiNishimura\.android\avd\Pixel_7_Pro_API_33.avd" />
                 </Key>
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2023-12-26T09:38:54.252987300Z" />
+          <timeTargetWasSelectedWithDropDown value="2023-12-31T04:41:10.726351600Z" />
         </State>
       </entry>
     </value>
