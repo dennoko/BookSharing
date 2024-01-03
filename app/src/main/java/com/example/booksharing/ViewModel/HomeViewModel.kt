@@ -2,7 +2,7 @@ package com.example.booksharing.ViewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.booksharing.firestore.ManageData
+import com.example.booksharing.repository.ManageData
 import com.example.booksharing.firestore.detailforapi
 import com.example.booksharing.testData.TestBooksData
 import com.google.common.collect.ImmutableList
