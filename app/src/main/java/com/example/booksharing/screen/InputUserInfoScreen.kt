@@ -2,11 +2,13 @@ package com.example.booksharing.screen
 
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -23,6 +25,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.booksharing.ViewModel.HomeViewModel
 import com.example.booksharing.room.AppDatabase
 import com.example.booksharing.room.UserDataEntity
@@ -33,7 +36,7 @@ import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun InputUserInfoScreen(vm: HomeViewModel = viewModel()) {
+fun InputUserInfoScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
     // get context
     val context = LocalContext.current
     // Roomのインスタンスを作成
@@ -68,6 +71,7 @@ fun InputUserInfoScreen(vm: HomeViewModel = viewModel()) {
                 interactionSource = MutableInteractionSource(),
                 indication = null
             ) { focusManager.clearFocus(); keyboardController?.hide() }
+            .background(color = MaterialTheme.colorScheme.surface)
     ) {
         // ここにユーザー情報を入力する画面を作成します。
         TextField(
@@ -99,6 +103,8 @@ fun InputUserInfoScreen(vm: HomeViewModel = viewModel()) {
                         withContext(Dispatchers.IO) {
                             try {
                                 db.userDataDao().insertUserData(UserDataEntity(id = 0,userName))
+                                focusManager.clearFocus()
+                                keyboardController?.hide()
                             } catch (e: Exception) {
                                 Log.d("methodTest", "insertUserData: error ${e.message}  ${e.cause}")
                             }
