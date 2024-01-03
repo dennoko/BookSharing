@@ -4,7 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.booksharing.GoogleBooksAPI.BooksData
-import com.example.booksharing.firestore.ManageData
+import com.example.booksharing.repository.ManageData
 import com.example.booksharing.firestore.detailforapi
 import com.google.common.collect.ImmutableList
 import com.google.firebase.firestore.ktx.firestore
