@@ -16,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -35,6 +36,8 @@ fun HomeScreen(vm: HomeViewModel = viewModel()) {
     kindleのように、firebaseから取得した本の情報を表示できるようにしましょう。
      */
     val coroutineScope = rememberCoroutineScope()
+    // get context
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
