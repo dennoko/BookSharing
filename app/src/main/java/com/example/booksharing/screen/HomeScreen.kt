@@ -111,6 +111,7 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
         }
     }
 
+    // 初回起動時にユーザー情報を入力する画面を表示する
     if (isShowInputUserInfoScreen) {
         InputUserInfoScreen(navController = navController)
     }

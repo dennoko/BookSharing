@@ -104,7 +104,10 @@ fun InputUserInfoScreen(vm: HomeViewModel = viewModel(), navController: NavContr
                             try {
                                 db.userDataDao().insertUserData(UserDataEntity(id = 0,userName))
                                 focusManager.clearFocus()
-                                keyboardController?.hide()
+                                withContext(Dispatchers.Main) { // キーボードを閉じるのと画面遷移はメインスレッドで行ったほうがいいのか？
+                                    keyboardController?.hide()
+                                    navController.navigate("home")
+                                }
                             } catch (e: Exception) {
                                 Log.d("methodTest", "insertUserData: error ${e.message}  ${e.cause}")
                             }
