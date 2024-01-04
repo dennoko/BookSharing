@@ -31,7 +31,10 @@ import com.example.booksharing.ui.theme.BookSharingTheme
 import com.example.booksharing.ui_components.BookDisplay
 import com.example.booksharing.ui_components.SearchBox
 import com.google.common.collect.ImmutableList
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 @Composable
@@ -69,7 +72,7 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
     ) {
-        // 本の情報を更新
+        // 本の情報を更新 TODO: テスト用のコードなので、データ取得が実装出来たら置き換え
         LaunchedEffect(Unit) {
             vm.getBooksTest()
         }
@@ -79,21 +82,19 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
 
         // ここから本の情報を表示
         // タグごとに表示するようするので LazyColumn にタグのリストを渡します。
-        // テスト用のデータ Todo データ取得が実装出来たら置き換え
-        //val tags = listOf("tag1", "tag2", "tag3", "tag4", "tag5", "tag6", "tag7", "tag8", "tag9", "tag10")
         val tags = tagsList ?: emptyList<String>()
 
         LazyColumn {
             items(tags.size) {
-                // タグを元に本の情報を取得
-                // テスト用のデータ Todo データ取得が実装出来たら置き換え
-                val books = vm.booksList.collectAsState()
-                // 本の情報を格納するリスト
-                var booksData = remember { mutableStateOf<ImmutableList<detailforapi>?>(null) }
+                // タグごとの本のリストを取得
+                var books: ImmutableList<detailforapi>? by remember { mutableStateOf(null) }
+
 
                 LaunchedEffect(Unit) {
                     coroutineScope.launch {
-                        booksData.value = vm.getBooks(tags[it])
+                        withContext(Dispatchers.IO) {
+                            books = vm.getBooks(tags[it])
+                        }
                     }
                 }
 
@@ -102,11 +103,11 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
 
                 // LazyRow に本の情報を渡し、表示する
                 LazyRow {
-                    if(booksData.value != null) {
-                        Log.d("hoge", "HomeScreen LazyRow booksData.value != null: ${booksData.value}")
-                        items(books.value.size) {
+                    if(books != null) {
+                        Log.d("hoge", "HomeScreen LazyRow booksData.value != null: ${books}")
+                        items(books!!.size) {
                             // 本の情報を表示
-                            BookDisplay(books.value[it])
+                            BookDisplay(books!![it])
                             Spacer(modifier = Modifier.width(8.dp))
                         }
                     }

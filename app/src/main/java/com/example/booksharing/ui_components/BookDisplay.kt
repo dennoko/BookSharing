@@ -14,10 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.booksharing.firestore.detailforapi
 import com.example.booksharing.testData.TestBooksData
 
 @Composable
-fun BookDisplay(testData: TestBooksData) {
+fun BookDisplay(testData: detailforapi) {
     /*
     このコンポーザブルは、ホーム画面に本を表示するためのコンポーザブルです。
      */
