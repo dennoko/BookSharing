@@ -26,9 +26,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 @Composable
-fun MyBooksScreen() {
+fun MyBooksScreen(navController: NavController) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -54,7 +55,7 @@ fun MyBooksScreen() {
         //ここでfirestoreから自分が所有する本の情報を取得し、並べるようにする
 
         Box {
-            Button(onClick = {/*画面遷移*/},modifier=Modifier.align(Alignment.BottomCenter)) {
+            Button(onClick = {navController.navigate("home")},modifier=Modifier.align(Alignment.BottomCenter)) {
                 Text(text = "ホームに戻る")
             }
         }
