@@ -20,6 +20,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.booksharing.screen.HomeScreen
 import com.example.booksharing.ui.theme.BookSharingTheme
+import com.example.booksharing.ui_components.MyBooksScreen
 import com.example.booksharing.ui_components.NavigationBar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -52,6 +53,9 @@ class MainActivity : ComponentActivity() {
                         NavHost(navController = navController, startDestination = "home" , modifier = Modifier.padding(it)) {
                             composable("home") {
                                 HomeScreen(navController = navController)
+                            }
+                            composable("mypage"){
+                                MyBooksScreen(navController = navController)
                             }
                         }
                     }
