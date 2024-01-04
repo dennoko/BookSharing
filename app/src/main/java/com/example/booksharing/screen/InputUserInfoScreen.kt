@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -117,18 +118,18 @@ fun InputUserInfoScreen(vm: HomeViewModel = viewModel(), navController: NavContr
             onValueChange = {
                 userName = it
             },
-            leadingIcon = { Icon(imageVector = Icons.Filled.Create, tint = MaterialTheme.colorScheme.primary,contentDescription = null) },
             label = {
                 Text("ユーザー名")
             },
             singleLine = true,
             placeholder = { Text("例: dennoko") },
         )
-        Spacer(modifier = Modifier.height(14.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
         // ユーザー情報の保存ボタン
         Button(
-            shape = RoundedCornerShape(5.dp),
+            modifier = Modifier.width(width = 280.dp),
+            shape = RoundedCornerShape(10.dp),
             onClick = {
                 coroutineScope.launch {
                     // 既存のユーザーと重複していないか確認
@@ -157,7 +158,7 @@ fun InputUserInfoScreen(vm: HomeViewModel = viewModel(), navController: NavContr
                 }
             }
         ) {
-            Text(text = "登録", fontSize = 20.sp)
+            Text(text = "はじめる", fontSize = 20.sp)
         }
     }
 }

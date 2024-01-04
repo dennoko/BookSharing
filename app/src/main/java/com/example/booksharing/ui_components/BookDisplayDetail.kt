@@ -65,7 +65,7 @@ fun BookDisplayDetail(testData: TestBooksData) {
                     Spacer(modifier = Modifier.height(10.dp))
 
                     Button(shape = RoundedCornerShape(10.dp), onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) { //予約ボタン
-                        Text(text = "予約する", fontSize = 25.sp, fontWeight = FontWeight.Bold)
+                        Text(text = "予約する", fontSize = 20.sp, fontWeight = FontWeight.Bold)
                     }
                 }
             }
