@@ -42,7 +42,7 @@ fun bookdetaildisplay(detailforapi: detailforapi,navController: NavController){
                 , contentDescription = "apiで取ってきた本の画像")
         }
         Column(horizontalAlignment = Alignment.Start) {
-            Text(text = "著者：　${detailforapi.detail.owner}")
+            Text(text = "著者：　${detailforapi.item.volumeInfo.authors}")
             Text(text = "出版社：　${detailforapi.item.volumeInfo.publisher}")
             Text(text = "出版年：　${detailforapi.item.volumeInfo.publishedDate}")
             Text(text = "カテゴリ：　${detailforapi.item.volumeInfo.categories}")
