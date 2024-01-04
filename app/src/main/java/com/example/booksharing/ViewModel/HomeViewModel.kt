@@ -50,4 +50,14 @@ class HomeViewModel: ViewModel() {
             _usersList.value = manageData.getOwnerList(db)
         }
     }
+
+    // タグのリストを取得する関数
+    var _tagsList = MutableStateFlow<ImmutableList<String>?> (null)
+    val tagsList = _tagsList.asStateFlow()
+
+    fun getTags() {
+        viewModelScope.launch {
+            _tagsList.value = manageData.getTagsList(db)
+        }
+    }
 }

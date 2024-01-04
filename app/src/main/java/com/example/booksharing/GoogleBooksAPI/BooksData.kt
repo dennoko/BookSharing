@@ -10,20 +10,19 @@ data class BooksData(
 @Serializable
 data class Item(
     val id: String,
-    val selfLink: String,
+    val selfLink: String = "",
     val volumeInfo: VolumeInfo
 )
 
 @Serializable
 data class VolumeInfo(
-    val title: String,
-    val authors: List<String>,
-    val publisher: String,
-    val publishedDate: String,
-    val description: String,
-    val industryIdentifiers: List<IndustryIdentifier>,
-    val categories: List<String>,
-    val imageLinks: ImageLinks
+    val title: String = "No Title",
+    val authors: List<String> = emptyList(),
+    val publisher: String = "No Publisher",
+    val publishedDate: String = "No Published Date",
+    val description: String = "No Description",
+    val industryIdentifiers: List<IndustryIdentifier>? = null,
+    val imageLinks: ImageLinks = ImageLinks()
 )
 
 @Serializable
@@ -34,5 +33,6 @@ data class IndustryIdentifier(
 
 @Serializable
 data class ImageLinks(
-    val thumbnail: String
+    // データが存在しない場合の画像を初期値として設定
+    val thumbnail: String = "https://t4.ftcdn.net/jpg/04/75/01/23/240_F_475012363_aNqXx8CrsoTfJP5KCf1rERd6G50K0hXw.jpg"
 )
