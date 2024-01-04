@@ -12,10 +12,14 @@ interface UserDataDAO {
     suspend fun insertUserData(userData: UserDataEntity)
 
     // ユーザー名からidを取得する
-    @Query("SELECT id FROM UserDataEntity WHERE UserName = :userName")
+    @Query("SELECT id FROM UserDataEntity WHERE userName = :userName")
     suspend fun getIdByUserName(userName: String): Int
 
     // ユーザー名を変更する
     @Update
     suspend fun updateUserData(userData: UserDataEntity)
+
+    // id = 0 のデータを取得する
+    @Query("SELECT * FROM UserDataEntity WHERE id = 0")
+    suspend fun getUserData(): UserDataEntity
 }

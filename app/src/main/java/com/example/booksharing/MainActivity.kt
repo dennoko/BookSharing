@@ -51,7 +51,7 @@ class MainActivity : ComponentActivity() {
                     ) {
                         NavHost(navController = navController, startDestination = "home" , modifier = Modifier.padding(it)) {
                             composable("home") {
-                                HomeScreen()
+                                HomeScreen(navController = navController)
                             }
                         }
                     }

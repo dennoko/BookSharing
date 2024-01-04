@@ -141,6 +141,26 @@ class ManageData {
         return ImmutableList.copyOf(tagList)
     }
 
+    // owner のリストを返す関数. 重複を削除して返す. 新しいownerの登録時に、既に登録されているownerのリストを取得するために使用する.
+    suspend fun getOwnerList(db: FirebaseFirestore): ImmutableList<String> {
+        val ownerList = mutableListOf<String>()
+        try {
+            val result = db.collection("C0de").get().await()
+            for (document in result) {
+                val owner = document.data["owner"] as String
+                if (owner != "") {
+                    ownerList.add(owner)
+                }
+            }
+        } catch (e: Exception) {
+            Log.d("error", "getOwnerList: error occurred  ${e.message}  ${e.cause}")
+        }
+        // 重複を削除
+        ownerList.distinct()
+        // ImmutableList に変換して返す
+        return ImmutableList.copyOf(ownerList)
+    }
+
 
     // 以下はGoogle Books API 用の関数
     // Retrofit のインスタンスを作成
