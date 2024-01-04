@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Create
@@ -127,6 +128,7 @@ fun InputUserInfoScreen(vm: HomeViewModel = viewModel(), navController: NavContr
 
         // ユーザー情報の保存ボタン
         Button(
+            shape = RoundedCornerShape(5.dp),
             onClick = {
                 coroutineScope.launch {
                     // 既存のユーザーと重複していないか確認
