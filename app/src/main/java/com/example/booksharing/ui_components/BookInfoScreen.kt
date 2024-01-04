@@ -22,11 +22,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.booksharing.firestore.detailforapi
 
 @Composable
-fun bookdetaildisplay(detailforapi: detailforapi){
+fun bookdetaildisplay(detailforapi: detailforapi,navController: NavController){
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -47,7 +48,7 @@ fun bookdetaildisplay(detailforapi: detailforapi){
             Text(text = "解説：　${detailforapi.item.volumeInfo.description}")
             Spacer(modifier = Modifier.width(32.dp))
             Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
-                Button(onClick = { /*todo*/ },) {
+                Button(onClick = { navController.navigate("home") },) {
                     Text(text = "トップページに戻る")
                 }
                 Spacer(modifier = Modifier.width(16.dp))
