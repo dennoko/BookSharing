@@ -65,7 +65,7 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
     }
 
     // タグのリストを取得する
-    val tagsList by vm.tagsList.collectAsState()
+    val tagsList = vm.tagsList.collectAsState()
 
 
     Column(
@@ -82,7 +82,7 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
 
         // ここから本の情報を表示
         // タグごとに表示するようするので LazyColumn にタグのリストを渡します。
-        val tags = tagsList ?: emptyList<String>()
+        val tags = tagsList.value ?: emptyList<String>()
 
         LazyColumn {
             items(tags.size) {

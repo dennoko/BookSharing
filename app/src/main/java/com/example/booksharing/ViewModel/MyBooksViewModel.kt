@@ -21,6 +21,18 @@ class MyBooksViewModel: ViewModel() {
     // 書籍の検索キーワード
     var keyWord = mutableStateOf("")
 
+    // ダイアログの表示状態
+    var isShowDialog = mutableStateOf(false)
+    // タグのStringを格納する変数
+    var tag1 = mutableStateOf("")
+    var tag2 = mutableStateOf("")
+    var tag3 = mutableStateOf("")
+    var tag4 = mutableStateOf("")
+    var tag5 = mutableStateOf("")
+
+    // 追加する本として選択された本のオプションの表示状態
+    var isShowBookOptions = mutableStateOf(false)
+
     // 自分の書籍のリストを取得する関数
     var _myBooksList = MutableStateFlow<ImmutableList<detailforapi>?> (null)
     val myBooksList = _myBooksList.asStateFlow()
@@ -39,6 +51,8 @@ class MyBooksViewModel: ViewModel() {
     fun searchBooks() {
         viewModelScope.launch {
             _searchedBooksData.value = manageData.searchBooks(keyWord.value)
+
+            keyWord.value = ""
         }
     }
 
@@ -53,7 +67,7 @@ class MyBooksViewModel: ViewModel() {
     }
 
     // 書籍を追加する関数. 選択された書籍の情報＋タグを引数に取る.
-    fun addBook(bookInfo: detailforapi, tag1:String = "", tag2:String = "", tag3:String = "", tag4:String = "", tag5:String = "") {
-        manageData.registBook(bookInfo.detail.owner, bookInfo.detail.isbn, tag1, tag2, tag3, tag4, tag5, db)
+    fun addBook(bookInfo: detailforapi) {
+        manageData.registBook(bookInfo.detail.owner, bookInfo.detail.isbn, tag1.value, tag2.value, tag3.value, tag4.value, tag5.value, db)
     }
 }
