@@ -64,7 +64,6 @@ fun BookDisplayDetail(testData: TestBooksData) {
 
             Text(text = "出版社：" + testData.item.volumeInfo.publisher)
             Text(text = "出版年：" + testData.item.volumeInfo.publishedDate)
-            Text(text = "カテゴリ： ${testData.item.volumeInfo.categories}")
             Text(text = "ISBN：" + testData.isbn)
             Row {// tag2, tag3の表示をまとめてしたい
                 FilledTonalButton(onClick = { /*TODO*/ }) {

@@ -14,6 +14,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class MyBooksViewModel: ViewModel() {
+    // ユーザー名
+    var owner = ""
+
     // Instance of ManageData
     private val manageData = ManageData()
     private val db = Firebase.firestore
@@ -30,8 +33,39 @@ class MyBooksViewModel: ViewModel() {
     var tag4 = mutableStateOf("")
     var tag5 = mutableStateOf("")
 
-    // 追加する本として選択された本のオプションの表示状態
-    var isShowBookOptions = mutableStateOf(false)
+    // 選択されたタグをtag1~5に順に格納する関数
+    fun setTag(tag: String) {
+        if(tag1.value == "") {
+            tag1.value = tag
+        } else if(tag2.value == "") {
+            tag2.value = tag
+        } else if(tag3.value == "") {
+            tag3.value = tag
+        } else if(tag4.value == "") {
+            tag4.value = tag
+        } else if(tag5.value == "") {
+            tag5.value = tag
+        } else {
+            // Todo: タグがこれ以上追加できないことをユーザーに伝える
+        }
+    }
+
+    // 選択解除されたタグをtag1~5から削除する関数
+    fun removeTag(tag: String) {
+        if(tag1.value == tag) {
+            tag1.value = ""
+        } else if(tag2.value == tag) {
+            tag2.value = ""
+        } else if(tag3.value == tag) {
+            tag3.value = ""
+        } else if(tag4.value == tag) {
+            tag4.value = ""
+        } else if(tag5.value == tag) {
+            tag5.value = ""
+        } else {
+
+        }
+    }
 
     // 自分の書籍のリストを取得する関数
     var _myBooksList = MutableStateFlow<ImmutableList<detailforapi>?> (null)
@@ -57,7 +91,7 @@ class MyBooksViewModel: ViewModel() {
     }
 
     // タグのリストを取得する関数
-    var _tagsList = MutableStateFlow<ImmutableList<String>?> (null)
+    var _tagsList = MutableStateFlow<List<String>?> (null)
     val tagsList = _tagsList.asStateFlow()
 
     fun getTags() {
@@ -65,6 +99,22 @@ class MyBooksViewModel: ViewModel() {
             _tagsList.value = manageData.getTagsList(db)
         }
     }
+
+    // タグを追加する関数
+    var newTag = mutableStateOf("")
+    fun addNewTag() {
+        if(newTag.value != "") {
+            // 既存のタグと重複していないか確認する
+            if(_tagsList.value?.contains(newTag.value) == false) {
+                // 重複していない場合は_tagsListにタグを追加する
+                _tagsList.value = _tagsList.value?.plus(newTag.value)
+
+                // タグを追加した後は、タグを空にする
+                newTag.value = ""
+            }
+        }
+    }
+
 
     // 書籍を追加する関数. 選択された書籍の情報＋タグを引数に取る.
     fun addBook(bookInfo: detailforapi) {

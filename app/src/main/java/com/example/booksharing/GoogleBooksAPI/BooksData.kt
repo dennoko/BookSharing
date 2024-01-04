@@ -33,5 +33,6 @@ data class IndustryIdentifier(
 
 @Serializable
 data class ImageLinks(
+    // データが存在しない場合の画像を初期値として設定
     val thumbnail: String = "https://t4.ftcdn.net/jpg/04/75/01/23/240_F_475012363_aNqXx8CrsoTfJP5KCf1rERd6G50K0hXw.jpg"
 )
