@@ -1,20 +1,22 @@
 package com.example.booksharing.firestore
 
 import com.example.booksharing.GoogleBooksAPI.Item
+import javax.annotation.concurrent.Immutable
 
+@Immutable
 data class detaildata(
-    var isbooked:Boolean,
-    var owner:String,
-    var borrower:String,
-    var isbn:String,
-    var tag1:String,
-    var tag2:String,
-    var tag3:String,
-    var tag4:String,
-    var tag5:String
+    val isbooked:Boolean,
+    val owner:String,
+    val borrower:String,
+    val isbn:String,
+    val tag1:String,
+    val tag2:String,
+    val tag3:String,
+    val tag4:String,
+    val tag5:String
 )
-
+@Immutable
 data class detailforapi(
-    var detail:detaildata,
-    var item:Item
+    val detail:detaildata,
+    val item:Item
 )

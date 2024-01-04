@@ -1,10 +1,11 @@
-package com.example.booksharing.firestore
+package com.example.booksharing.repository
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import com.example.booksharing.GoogleBooksAPI.BooksData
-import com.example.booksharing.GoogleBooksAPI.Item
 import com.example.booksharing.GoogleBooksAPI.RetrofitInstance
+import com.example.booksharing.firestore.detaildata
+import com.example.booksharing.firestore.detailforapi
 import com.google.common.collect.ImmutableList
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -105,7 +106,7 @@ class ManageData {
     }
 
     //本を削除
-    fun deleteBook(db:FirebaseFirestore,collection:String, document:String,detail:detaildata,context:Context){
+    fun deleteBook(db:FirebaseFirestore, collection:String, document:String, detail: detaildata, context:Context){
         val bookRef=db.collection(collection).document(document)
         bookRef.delete()
             .addOnSuccessListener{
