@@ -7,6 +7,6 @@ import androidx.room.PrimaryKey
 data class UserDataEntity(
     // データは1つなので、id は 0 で固定
     @PrimaryKey val id: Int = 0,
-    val UserName: String,
-    val Organization: String = "C0de",
+    val userName: String? = null,
+    val organization: String = "C0de",
 )

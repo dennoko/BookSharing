@@ -41,4 +41,13 @@ class HomeViewModel: ViewModel() {
         val booksData = viewModelScope.async { manageData.getBooksByTag(db, tag) }.await()
         return booksData
     }
+
+    // 登録済みのユーザーのリストを取得する関数(初回起動時に使用)
+    var _usersList = MutableStateFlow<ImmutableList<String>?>(null)
+    val usersList = _usersList.asStateFlow()
+    fun getUsersList() {
+        viewModelScope.launch {
+            _usersList.value = manageData.getOwnerList(db)
+        }
+    }
 }

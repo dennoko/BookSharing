@@ -1,15 +1,22 @@
 package com.example.booksharing.ui_components
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -24,6 +31,7 @@ fun bookdetaildisplay(detailforapi: detailforapi){
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ){
+        var showDialog by remember { mutableStateOf(false) }
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = detailforapi.item.volumeInfo.title,
                 fontSize = 24.sp,
@@ -39,10 +47,35 @@ fun bookdetaildisplay(detailforapi: detailforapi){
             Text(text = "カテゴリ：　${detailforapi.item.volumeInfo.categories}")
             Text(text = "解説：　${detailforapi.item.volumeInfo.description}")
             Spacer(modifier = Modifier.width(32.dp))
-            Button(onClick = {//ここでdeletebookを呼び出したい
-            },modifier=Modifier.align(Alignment.End)) {
-                Text(text = "この本を削除する")
+            Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
+                Button(onClick = { /*todo*/ },) {
+                    Text(text = "トップページに戻る")
+                }
+                Spacer(modifier = Modifier.width(16.dp))
+                Button(
+                    onClick = { showDialog = true },
+                ) {
+                    Text(text = "この本を削除する")
+                }
             }
+        }
+        //ダイアログの表示
+        if (showDialog) {
+            AlertDialog(onDismissRequest = { showDialog = false },
+                confirmButton = {
+                    TextButton(onClick = { /*TODO*/ }) {
+                        Text(text = "OK")
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { /*TODO*/ }) {
+                        Text(text = "キャンセル")
+                    }
+                },
+                title = {
+                    Text(text = "確認")
+                },
+                text = { Text(text = "本当にこの本を削除しますか?") })
         }
     }
 }
