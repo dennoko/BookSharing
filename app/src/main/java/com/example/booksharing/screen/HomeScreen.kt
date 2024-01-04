@@ -47,7 +47,7 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
     // Room のインスタンスを作成
     val db = AppDatabase.getDB(context)
 
-    // room の id = 0 に保存されたデータがあるかどうかを確認し、なければユーザー情報を入力する画面を表示する
+    // room の id = 0 に保存されたデータがあるかどうかを確認し、なければユーザー情報を入力する画面を表示する. また、画面に表示する情報を取得する.
     var isShowInputUserInfoScreen by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
         coroutineScope.launch {
@@ -55,8 +55,14 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
             if (userData == null) {
                 isShowInputUserInfoScreen = true
             }
+
+            // 画面に表示する情報の取得
+            vm.getTags()
         }
     }
+
+    // タグのリストを取得する
+    val tagsList by vm.tagsList.collectAsState()
 
 
     Column(
@@ -74,7 +80,8 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
         // ここから本の情報を表示
         // タグごとに表示するようするので LazyColumn にタグのリストを渡します。
         // テスト用のデータ Todo データ取得が実装出来たら置き換え
-        val tags = listOf("tag1", "tag2", "tag3", "tag4", "tag5", "tag6", "tag7", "tag8", "tag9", "tag10")
+        //val tags = listOf("tag1", "tag2", "tag3", "tag4", "tag5", "tag6", "tag7", "tag8", "tag9", "tag10")
+        val tags = tagsList ?: emptyList<String>()
 
         LazyColumn {
             items(tags.size) {
