@@ -5,7 +5,10 @@
       <entry key="PreviewBookDisplayDetail">
         <State />
       </entry>
-      <entry key="PreviewMyBooksScreen">
+      <entry key="PreviewInputUserInfoScreen">
+        <State />
+      </entry>
+      <entry key="PreviewSearchBox">
         <State />
       </entry>
       <entry key="app">

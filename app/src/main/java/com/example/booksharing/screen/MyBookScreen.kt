@@ -51,6 +51,8 @@ import com.example.booksharing.firestore.detailforapi
 import com.example.booksharing.room.AppDatabase
 import com.example.booksharing.ui.theme.BookSharingTheme
 import com.example.booksharing.ui_components.BookDisplay
+import com.example.booksharing.ui_components.BookDisplayDetail
+import com.example.booksharing.ui_components.MyBooks
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -59,7 +61,6 @@ fun MyBooksScreen(vm: MyBooksViewModel = viewModel(), navController: NavControll
 
     // 自分の本のリストとタグのリストを取得する
     LaunchedEffect(Unit) {
-        vm.getMyBooks()
         vm.getTags()
 
         // room の id = 0 にデータが保存されているかどうかを確認し、なければユーザー情報を入力する画面を表示する. また、画面に表示する情報を取得する.
@@ -68,6 +69,8 @@ fun MyBooksScreen(vm: MyBooksViewModel = viewModel(), navController: NavControll
             navController.navigate("home")
         } else {
             vm.owner = userData.userName
+
+            vm.getMyBooks()
         }
     }
 
@@ -80,7 +83,7 @@ fun MyBooksScreen(vm: MyBooksViewModel = viewModel(), navController: NavControll
     val searchedBooks = vm.searchedBooksData.collectAsState()
 
     // keyboardの表示を切り替える変数
-    var keyboardController = LocalSoftwareKeyboardController.current
+    val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
 
     Surface(
@@ -140,7 +143,7 @@ fun MyBooksScreen(vm: MyBooksViewModel = viewModel(), navController: NavControll
                 if(myBooks.value != null){
                     LazyColumn {
                         items(myBooks.value!!.size) {
-                            BookDisplay(testData = myBooks.value!![it])
+                            MyBooks(myBooks.value!![it])
                         }
                     }
                 }
