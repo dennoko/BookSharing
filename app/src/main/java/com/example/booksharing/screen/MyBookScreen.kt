@@ -40,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -142,7 +143,11 @@ fun MyBooksScreen(vm: MyBooksViewModel = viewModel(), navController: NavControll
                 Spacer(modifier = Modifier.width(12.dp))
 
                 // 本の情報を表示
-                Text(text = "My Books", fontSize = 20.sp)
+                Text(
+                    text = "My Books",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                )
                 Spacer(modifier = Modifier.height(8.dp))
                 Divider(thickness = 2.dp)
 

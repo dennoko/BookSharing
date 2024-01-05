@@ -83,6 +83,7 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
 
         // ここに検索ボックスを作成します。
         SearchBox()
+        Divider()
 
         // ここから本の情報を表示
         // タグごとに表示するようするので LazyColumn にタグのリストを渡します。
