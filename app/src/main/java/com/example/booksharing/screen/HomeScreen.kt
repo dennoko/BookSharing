@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -84,8 +86,11 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
         // タグごとに表示するようするので LazyColumn にタグのリストを渡します。
         val tags = tagsList.value ?: emptyList<String>()
 
-        LazyColumn {
-            items(tags.size) {
+        Column(
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+        ) {
+            tags.forEach() {
                 // タグごとの本のリストを取得
                 var books: ImmutableList<detailforapi>? by remember { mutableStateOf(null) }
 
@@ -93,13 +98,13 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
                 LaunchedEffect(Unit) {
                     coroutineScope.launch {
                         withContext(Dispatchers.IO) {
-                            books = vm.getBooks(tags[it])
+                            books = vm.getBooks(it)
                         }
                     }
                 }
 
                 // タグ名を表示
-                Text(text = tags[it])
+                Text(text = it)
 
                 // LazyRow に本の情報を渡し、表示する
                 LazyRow {
