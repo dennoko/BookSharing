@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -45,6 +46,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
+import com.example.booksharing.ViewModel.AppViewModel
 import com.example.booksharing.ViewModel.MyBooksViewModel
 import com.example.booksharing.firestore.detaildata
 import com.example.booksharing.firestore.detailforapi
@@ -56,20 +58,15 @@ import com.example.booksharing.ui_components.MyBooks
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun MyBooksScreen(vm: MyBooksViewModel = viewModel(), navController: NavController) {
-    val userDB = AppDatabase.getDB(LocalContext.current)
-
+fun MyBooksScreen(vm: MyBooksViewModel = viewModel(), appVM: AppViewModel , navController: NavController) {
     // 自分の本のリストとタグのリストを取得する
     LaunchedEffect(Unit) {
         vm.getTags()
+        vm.owner = appVM.userName
 
-        // room の id = 0 にデータが保存されているかどうかを確認し、なければユーザー情報を入力する画面を表示する. また、画面に表示する情報を取得する.
-        val userData = userDB.userDataDao().getUserData()
-        if (userData.userName == null) {
+        if(vm.owner == "") {
             navController.navigate("home")
         } else {
-            vm.owner = userData.userName
-
             vm.getMyBooks()
         }
     }
@@ -146,6 +143,9 @@ fun MyBooksScreen(vm: MyBooksViewModel = viewModel(), navController: NavControll
                             MyBooks(myBooks.value!![it])
                         }
                     }
+                } else {
+                    Spacer(modifier = Modifier.height(64.dp))
+                    Text(text = "Loading...")
                 }
             }
 
@@ -270,8 +270,9 @@ fun MyBooksScreen(vm: MyBooksViewModel = viewModel(), navController: NavControll
 @Composable
 fun PreviewMyBooksScreen() {
     val navController = rememberNavController()
+    val appVM = AppViewModel(AppDatabase.getDB(LocalContext.current))
 
     BookSharingTheme {
-        MyBooksScreen(navController = navController)
+        MyBooksScreen(navController = navController, appVM = appVM)
     }
 }

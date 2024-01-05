@@ -15,6 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.booksharing.ViewModel.AppViewModel
+import com.example.booksharing.room.AppDatabase
 import com.example.booksharing.screen.HomeScreen
 import com.example.booksharing.screen.MyBooksScreen
 import com.example.booksharing.ui.theme.BookSharingTheme
@@ -27,7 +29,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
-            val db = Firebase.firestore
+            val roomDB = AppDatabase.getDB(this)
+
+            val appVM = AppViewModel(roomDB)
 
             BookSharingTheme {
                 // A surface container using the 'background' color from the theme
@@ -52,7 +56,7 @@ class MainActivity : ComponentActivity() {
                                 HomeScreen(navController = navController)
                             }
                             composable("mypage"){
-                                MyBooksScreen(navController = navController)
+                                MyBooksScreen(navController = navController, appVM = appVM)
                             }
                         }
                     }
