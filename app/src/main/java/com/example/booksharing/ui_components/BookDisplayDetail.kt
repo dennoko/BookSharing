@@ -64,18 +64,9 @@ fun BookDisplayDetail(testData: TestBooksData) {
                     Text(text = "貸出状況:" + testData.borrower)
                     Spacer(modifier = Modifier.height(10.dp))
 
-                    Button(shape = RoundedCornerShape(10.dp), onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) { //予約ボタン
-                        Text(text = "予約する", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                    }
-                }
-            }
-            Spacer(modifier = Modifier.height(10.dp))
-
-            Text(text = "出版社： ${testData.item.volumeInfo.publisher}")
-            Text(text = "出版年： ${testData.item.volumeInfo.publishedDate}")
-            Text(text = "カテゴリ： ${testData.item.volumeInfo.categories}")
-            Text(text = "ISBN： ${testData.isbn}")
-            Spacer(modifier = Modifier.height(5.dp))
+            Text(text = "出版社：" + testData.item.volumeInfo.publisher)
+            Text(text = "出版年：" + testData.item.volumeInfo.publishedDate)
+            Text(text = "ISBN：" + testData.isbn)
             Row {// tag2, tag3の表示をまとめてしたい
                 FilledTonalButton(
                     modifier = Modifier.heightIn(min = 36.dp),
@@ -104,12 +95,4 @@ fun BookDisplayDetail(testData: TestBooksData) {
             }
         }
     }
-}
-
-@Preview (showBackground = true)
-@Composable
-fun PreviewBookDisplayDetail () {
-    BookSharingTheme() {
-        BookDisplayDetail(testData = TestBooksData())
-    }
-}
+}}}

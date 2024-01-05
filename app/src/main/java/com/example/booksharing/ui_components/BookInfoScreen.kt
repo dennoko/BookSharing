@@ -45,7 +45,6 @@ fun bookdetaildisplay(detailforapi: detailforapi,navController: NavController){
             Text(text = "著者：　${detailforapi.item.volumeInfo.authors}")
             Text(text = "出版社：　${detailforapi.item.volumeInfo.publisher}")
             Text(text = "出版年：　${detailforapi.item.volumeInfo.publishedDate}")
-            Text(text = "カテゴリ：　${detailforapi.item.volumeInfo.categories}")
             Text(text = "解説：　${detailforapi.item.volumeInfo.description}")
             Spacer(modifier = Modifier.width(32.dp))
             Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {

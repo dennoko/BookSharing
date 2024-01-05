@@ -36,7 +36,6 @@ data class TestBooksData(
                     identifier = "9784873113933"
                 )
             ),
-            categories = listOf("Computers", "C0de"),
             imageLinks = ImageLinks(
                 thumbnail = "http://books.google.com/books/content?id=OfN_7hj2t5wC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
             )
