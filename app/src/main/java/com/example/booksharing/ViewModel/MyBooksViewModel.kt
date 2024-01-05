@@ -118,6 +118,6 @@ class MyBooksViewModel: ViewModel() {
 
     // 書籍を追加する関数. 選択された書籍の情報＋タグを引数に取る.
     fun addBook(bookInfo: detailforapi) {
-        manageData.registBook(bookInfo.detail.owner, bookInfo.detail.isbn, tag1.value, tag2.value, tag3.value, tag4.value, tag5.value, db)
+        manageData.registBook(owner = bookInfo.detail.owner, isbn = bookInfo.detail.isbn, tag1.value, tag2.value, tag3.value, tag4.value, tag5.value, db)
     }
 }
