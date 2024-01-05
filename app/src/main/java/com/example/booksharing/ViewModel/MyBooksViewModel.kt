@@ -74,7 +74,7 @@ class MyBooksViewModel: ViewModel() {
     fun getMyBooks() {
         viewModelScope.launch {
             // Todo: 持ち主のアカウント名が入るようにする
-            _myBooksList.value = manageData.getBooksByOwner(db, "owner")
+            _myBooksList.value = manageData.getBooksByOwner(db, owner)
         }
     }
 
