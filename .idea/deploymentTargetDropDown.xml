@@ -2,30 +2,8 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="PreviewBookDisplayDetail">
-        <State />
-      </entry>
-      <entry key="PreviewInputUserInfoScreen">
-        <State />
-      </entry>
-      <entry key="PreviewSearchBox">
-        <State />
-      </entry>
       <entry key="app">
-        <State>
-          <targetSelectedWithDropDown>
-            <Target>
-              <type value="QUICK_BOOT_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\dennn\.android\avd\Pixel_7_Pro_API_33.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-01-03T04:42:38.113504900Z" />
-        </State>
+        <State />
       </entry>
     </value>
   </component>
