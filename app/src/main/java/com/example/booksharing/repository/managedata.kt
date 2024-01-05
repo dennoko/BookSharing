@@ -135,10 +135,8 @@ class ManageData {
         } catch (e: Exception) {
             Log.d("error", "getTagList: error occurred  ${e.message}  ${e.cause}")
         }
-        // 重複を削除
-        tagList.distinct()
-        // ImmutableList に変換して返す
-        return ImmutableList.copyOf(tagList)
+        // ImmutableList に変換して返す. 重複も削除
+        return ImmutableList.copyOf(tagList.distinct())
     }
 
     // owner のリストを返す関数. 重複を削除して返す. 新しいownerの登録時に、既に登録されているownerのリストを取得するために使用する.
@@ -155,10 +153,8 @@ class ManageData {
         } catch (e: Exception) {
             Log.d("error", "getOwnerList: error occurred  ${e.message}  ${e.cause}")
         }
-        // 重複を削除
-        ownerList.distinct()
-        // ImmutableList に変換して返す
-        return ImmutableList.copyOf(ownerList)
+        // ImmutableList に変換して返す. 重複も削除
+        return ImmutableList.copyOf(ownerList.distinct())
     }
 
 
