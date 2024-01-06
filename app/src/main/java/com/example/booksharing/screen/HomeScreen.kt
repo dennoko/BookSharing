@@ -1,6 +1,7 @@
 package com.example.booksharing.screen
 
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,6 +32,7 @@ import com.example.booksharing.firestore.detailforapi
 import com.example.booksharing.room.AppDatabase
 import com.example.booksharing.ui.theme.BookSharingTheme
 import com.example.booksharing.ui_components.BookDisplay
+import com.example.booksharing.ui_components.BookDisplayDetail
 import com.example.booksharing.ui_components.SearchBox
 import com.google.common.collect.ImmutableList
 import kotlinx.coroutines.Dispatchers
@@ -81,6 +83,7 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
 
         // ここに検索ボックスを作成します。
         SearchBox()
+        Divider()
 
         // ここから本の情報を表示
         // タグごとに表示するようするので LazyColumn にタグのリストを渡します。
@@ -111,9 +114,18 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
                     if(books != null) {
                         Log.d("hoge", "HomeScreen LazyRow booksData.value != null: ${books}")
                         items(books!!.size) {
-                            // 本の情報を表示
-                            BookDisplay(books!![it])
-                            Spacer(modifier = Modifier.width(8.dp))
+                            Column(
+                                modifier = Modifier
+                                    .clickable {
+                                        // 詳細表示
+                                        vm.selectedBookInfo.value = books!![it]
+                                        vm.isShowBookDetail.value = true
+                                    }
+                            ) {
+                                // 本の情報を表示
+                                BookDisplay(books!![it])
+                                Spacer(modifier = Modifier.width(8.dp))
+                            }
                         }
                     }
                 }
@@ -122,6 +134,16 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
                 Divider()
             }
         }
+    }
+
+    // 本の詳細を表示
+    if (vm.isShowBookDetail.value && vm.selectedBookInfo.value != null) {
+        BookDisplayDetail(
+            vm.selectedBookInfo.value!!,
+            clickBack = {
+                vm.isShowBookDetail.value = false
+            }
+        )
     }
 
     // 初回起動時にユーザー情報を入力する画面を表示する
