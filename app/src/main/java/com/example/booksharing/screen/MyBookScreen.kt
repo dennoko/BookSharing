@@ -200,6 +200,7 @@ fun MyBooksScreen(vm: MyBooksViewModel = viewModel(), navController: NavControll
                                             Icon(
                                                 imageVector = Icons.Default.Search,
                                                 contentDescription = "本の検索アイコン",
+                                                tint = MaterialTheme.colorScheme.primary,
                                             )
                                         }
                                     }
