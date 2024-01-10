@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,9 +25,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.booksharing.GoogleBooksAPI.BooksData
 import com.example.booksharing.ViewModel.HomeViewModel
+import com.example.booksharing.firestore.detaildata
 import com.example.booksharing.firestore.detailforapi
 import com.example.booksharing.room.AppDatabase
+import com.example.booksharing.testData.TestBooksData
 import com.example.booksharing.ui.theme.BookSharingTheme
 import com.example.booksharing.ui_components.BookDisplay
 import com.example.booksharing.ui_components.SearchBox
@@ -35,6 +39,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.internal.immutableListOf
+import okhttp3.internal.toImmutableList
 
 
 @Composable
@@ -88,12 +94,15 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
             items(tags.size) {
                 // タグごとの本のリストを取得
                 var books: ImmutableList<detailforapi>? by remember { mutableStateOf(null) }
+                var testBooks: MutableList<detailforapi>? by remember { mutableStateOf(null) }
+                var bool by remember { mutableStateOf(false) }
 
 
                 LaunchedEffect(Unit) {
                     coroutineScope.launch {
                         withContext(Dispatchers.IO) {
                             books = vm.getBooks(tags[it])
+                            bool = true
                         }
                     }
                 }
@@ -111,6 +120,11 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
                             Spacer(modifier = Modifier.width(8.dp))
                         }
                     }
+                    testBooks = testBooksData()
+                    items(testBooks!!.size) {
+                        BookDisplay(testData = testBooks!![it])
+                        Spacer(modifier = Modifier.width(8.dp))
+                    }
                 }
 
                 // 区切り線を表示
@@ -123,6 +137,24 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
     if (isShowInputUserInfoScreen) {
         InputUserInfoScreen(navController = navController)
     }
+}
+
+fun testBooksData() : MutableList<detailforapi> {
+    var booksData: MutableList<detailforapi> = mutableListOf()
+
+    //テストのためのロジックを追加
+    for(i in 1..5) {
+        val testBooksData = TestBooksData()
+        val detailForApi = detailforapi(
+            detail = detaildata(
+                owner = testBooksData.owner,
+                isbn = testBooksData.isbn
+            ),
+            item = testBooksData.item
+        )
+        booksData.add(detailForApi)
+    }
+    return booksData
 }
 
 @Preview(showBackground = true)
