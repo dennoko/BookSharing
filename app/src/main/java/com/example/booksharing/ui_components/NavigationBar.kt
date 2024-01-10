@@ -70,7 +70,6 @@ fun NavigateButton(navController: NavController, route: String, txt: String, ico
     ) {
         Icon(
             modifier = Modifier.size(30.dp),
-            tint = MaterialTheme.colorScheme.onPrimary,
             imageVector = icon,
             contentDescription = "アイコン"
         )

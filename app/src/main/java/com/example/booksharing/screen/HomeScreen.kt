@@ -5,15 +5,22 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -146,12 +153,21 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
 
     // 本の詳細を表示
     if (vm.isShowBookDetail.value && vm.selectedBookInfo.value != null) {
-        BookDisplayDetail(
-            vm.selectedBookInfo.value!!,
-            clickBack = {
-                vm.isShowBookDetail.value = false
-            }
-        )
+        if (vm.isShowBookDetail.value) {
+            AlertDialog(
+                modifier = Modifier
+                    .padding(24.dp)
+                    .sizeIn(maxHeight = 600.dp, maxWidth = 400.dp),
+                onDismissRequest = { vm.isShowBookDetail.value = false },
+                confirmButton = {
+                    TextButton(onClick = { vm.isShowBookDetail.value = false }) {
+                        Text(text = "閉じる")
+                    }
+                },
+                text = { BookDisplayDetail(bookData = vm.selectedBookInfo.value!!) {}
+                }
+            )
+        }
     }
 
     // 初回起動時にユーザー情報を入力する画面を表示する
