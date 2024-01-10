@@ -153,21 +153,19 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
 
     // 本の詳細を表示
     if (vm.isShowBookDetail.value && vm.selectedBookInfo.value != null) {
-        if (vm.isShowBookDetail.value) {
-            AlertDialog(
-                modifier = Modifier
-                    .padding(24.dp)
-                    .sizeIn(maxHeight = 600.dp, maxWidth = 400.dp),
-                onDismissRequest = { vm.isShowBookDetail.value = false },
-                confirmButton = {
-                    TextButton(onClick = { vm.isShowBookDetail.value = false }) {
-                        Text(text = "閉じる")
-                    }
-                },
-                text = { BookDisplayDetail(bookData = vm.selectedBookInfo.value!!) {}
+        AlertDialog(
+            modifier = Modifier
+                .padding(24.dp)
+                .sizeIn(maxHeight = 600.dp, maxWidth = 400.dp),
+            onDismissRequest = { vm.isShowBookDetail.value = false },
+            confirmButton = {
+                TextButton(onClick = { vm.isShowBookDetail.value = false }) {
+                    Text(text = "閉じる")
                 }
-            )
-        }
+            },
+            text = { BookDisplayDetail(bookData = vm.selectedBookInfo.value!!) {}
+            }
+        )
     }
 
     // 初回起動時にユーザー情報を入力する画面を表示する
