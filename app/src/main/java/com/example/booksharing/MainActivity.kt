@@ -15,19 +15,24 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkManager
+import com.example.booksharing.Worker.NotificationWorker
 import com.example.booksharing.screen.HomeScreen
 import com.example.booksharing.screen.MyBooksScreen
 import com.example.booksharing.ui.theme.BookSharingTheme
 import com.example.booksharing.ui_components.NavigationBar
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // WorkManagerの設定
+        val workRequest = PeriodicWorkRequest.Builder(NotificationWorker::class.java, 3, java.util.concurrent.TimeUnit.HOURS).build()
+        WorkManager.getInstance(this).enqueue(workRequest)
+
         setContent {
             val navController = rememberNavController()
-            val db = Firebase.firestore
 
             BookSharingTheme {
                 // A surface container using the 'background' color from the theme
