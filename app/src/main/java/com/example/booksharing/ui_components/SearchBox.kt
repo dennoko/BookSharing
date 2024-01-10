@@ -30,7 +30,7 @@ fun SearchBox() {
         mutableStateOf("")
     }
 
-    Column ( modifier = Modifier.padding(20.dp)) {
+    Column {
         TextField(
             leadingIcon = {
                 Icon(

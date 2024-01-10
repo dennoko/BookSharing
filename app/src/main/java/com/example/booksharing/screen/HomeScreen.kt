@@ -5,6 +5,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -22,6 +24,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -35,6 +38,7 @@ import com.example.booksharing.ui_components.BookDisplay
 import com.example.booksharing.ui_components.BookDisplayDetail
 import com.example.booksharing.ui_components.SearchBox
 import com.google.common.collect.ImmutableList
+import com.google.common.math.LinearTransformation.horizontal
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -75,6 +79,7 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .padding(16.dp)
     ) {
         // 本の情報を更新 TODO: テスト用のコードなので、データ取得が実装出来たら置き換え
         LaunchedEffect(Unit) {
@@ -83,7 +88,7 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
 
         // ここに検索ボックスを作成します。
         SearchBox()
-        Divider()
+        Spacer(modifier = Modifier.height(8.dp))
 
         // ここから本の情報を表示
         // タグごとに表示するようするので LazyColumn にタグのリストを渡します。
@@ -107,7 +112,8 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
                 }
 
                 // タグ名を表示
-                Text(text = it)
+                Text(text = it, fontWeight = FontWeight.SemiBold)
+                Spacer(modifier = Modifier.height(6.dp))
 
                 // LazyRow に本の情報を渡し、表示する
                 LazyRow {
@@ -129,9 +135,11 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
                         }
                     }
                 }
+                Spacer(modifier = Modifier.height(6.dp))
 
                 // 区切り線を表示
                 Divider()
+                Spacer(modifier = Modifier.height(6.dp))
             }
         }
     }

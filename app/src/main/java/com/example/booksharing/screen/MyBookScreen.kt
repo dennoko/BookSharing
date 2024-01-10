@@ -1,34 +1,45 @@
 package com.example.booksharing.screen
 
 import android.util.Log
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -40,6 +51,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -145,17 +157,12 @@ fun MyBooksScreen(vm: MyBooksViewModel = viewModel(), navController: NavControll
                         .sizeIn(maxHeight = 600.dp, maxWidth = 400.dp),
                     onDismissRequest = { vm.isShowDialog.value = false },
                     confirmButton = {
-                        TextButton(onClick = { /*本を登録*/ }) {
-                            Text(text = "追加")
-                        }
-                    },
-                    dismissButton = {
-                        TextButton(onClick = { vm.isShowDialog.value = false }) {
-                            Text(text = "キャンセル")
+                        TextButton(onClick =  { vm.isShowDialog.value = false }) {
+                            Text(text = "閉じる")
                         }
                     },
                     title = {
-                        Text(text = "本の追加")
+                        Text(text = "本を登録する", fontWeight = FontWeight.SemiBold)
                     },
                     text = {
                         Column {
@@ -163,43 +170,43 @@ fun MyBooksScreen(vm: MyBooksViewModel = viewModel(), navController: NavControll
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
                             ) {
-                                TextField(value = vm.keyWord.value,
-                                    onValueChange = {vm.keyWord.value = it},
-                                    placeholder = { Text(text = "title or keyword") },
-                                    modifier = Modifier
-                                        .weight(1f)
-                                )
-                                Spacer(modifier = Modifier.width(8.dp))
-
                                 val keyboardController = LocalSoftwareKeyboardController.current
                                 val focusManager = LocalFocusManager.current
 
-                                Button(
-                                    onClick = {
-                                        if(vm.keyWord.value != "") {
-                                            vm.searchBooks()
-                                        } else {
-                                            // Todo: 検索ワードが入力されていないことをユーザーに伝える
-                                        }
+                                TextField(
+                                    value = vm.keyWord.value,
+                                    onValueChange = {vm.keyWord.value = it},
+                                    label = { Text("キーワードを入力") },
+                                    modifier = Modifier
+                                        .weight(1f),
+                                    singleLine = true,
+                                    trailingIcon = { // 本の検索ボタン
+                                        IconButton(
+                                            onClick = {
+                                                if(vm.keyWord.value != "") {
+                                                    vm.searchBooks()
+                                                } else {
+                                                    // Todo: 検索ワードが入力されていないことをユーザーに伝える
+                                                }
 
-                                        coroutineScope.launch {
-                                            withContext(Dispatchers.Default) {
-                                                keyboardController?.hide()
-                                                focusManager.clearFocus()
+                                                coroutineScope.launch {
+                                                    withContext(Dispatchers.Default) {
+                                                        keyboardController?.hide()
+                                                        focusManager.clearFocus()
+                                                    }
+                                                }
                                             }
+                                        ) {
+                                            Icon(
+                                                imageVector = Icons.Default.Search,
+                                                contentDescription = "本の検索アイコン",
+                                                tint = MaterialTheme.colorScheme.primary,
+                                            )
                                         }
-                                    },
-                                    shape = RoundedCornerShape(8.dp)
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Search,
-                                        contentDescription = "検索アイコン",
-                                    )
-                                }
+                                    }
+                                )
                             }
-                            Spacer(modifier = Modifier.width(12.dp))
-
-                            Text("追加する本を選択してください")
+                            Spacer(modifier = Modifier.height(8.dp))
                             LazyColumn {
                                 if(searchedBooks.value != null) {
                                     items(searchedBooks.value!!.items.size) {
@@ -211,6 +218,7 @@ fun MyBooksScreen(vm: MyBooksViewModel = viewModel(), navController: NavControll
                                                     .clickable { isShowBookOptions = !isShowBookOptions }
                                             ) {
                                                 AsyncImage(
+                                                    modifier = Modifier.size(80.dp),
                                                     model = searchedBooks.value!!.items[it].volumeInfo.imageLinks.thumbnail,
                                                     contentDescription = null,
                                                     contentScale = ContentScale.Fit,
@@ -218,7 +226,7 @@ fun MyBooksScreen(vm: MyBooksViewModel = viewModel(), navController: NavControll
                                                 Spacer(modifier = Modifier.width(8.dp))
                                                 
                                                 Text(text = searchedBooks.value!!.items[it].volumeInfo.title,
-                                                    fontSize = 16.sp,
+                                                    fontSize = 20.sp,
                                                     fontWeight = FontWeight.SemiBold,
                                                 )
                                             }
@@ -241,32 +249,38 @@ fun MyBooksScreen(vm: MyBooksViewModel = viewModel(), navController: NavControll
                                                                         vm.removeTag(tags.value!![it])
                                                                     }
                                                                 },
-                                                                label = { Text(text = tags.value!![it]) })
+                                                                label = { Text(text = tags.value!![it]) }
+                                                            )
+                                                            Spacer(modifier = Modifier.width(4.dp))
                                                         }
                                                     }
                                                 }
 
                                                 // 新しいタグを追加する
                                                 Row {
-                                                    TextField(value = vm.newTag.value,
+                                                    OutlinedTextField(
+                                                        value = vm.newTag.value,
                                                         onValueChange = {vm.newTag.value = it},
                                                         placeholder = { Text(text = "新しいタグを追加") },
                                                         modifier = Modifier
-                                                            .weight(1f)
-                                                    )
-                                                    Spacer(modifier = Modifier.width(16.dp))
-
-                                                    Button(
-                                                        onClick = {
-                                                            vm.addNewTag()
+                                                            .weight(1f),
+                                                        leadingIcon = {
+                                                            IconButton(
+                                                                onClick = { vm.addNewTag() }
+                                                            ) {
+                                                                Icon(
+                                                                    imageVector = Icons.Default.Add,
+                                                                    contentDescription = "タグ追加ボタン"
+                                                                )
+                                                            }
                                                         }
-                                                    ) {
-                                                        Text(text = "追加")
-                                                    }
+                                                    )
                                                 }
+                                                Spacer(modifier = Modifier.height(6.dp))
 
                                                 // 本を追加するボタン
                                                 Button(
+                                                    modifier = Modifier.fillMaxWidth(),
                                                     onClick = {
                                                         // isbn がない場合は、追加できないようにする
                                                         if(searchedBooks.value!!.items[it].volumeInfo.industryIdentifiers == null) {
@@ -292,7 +306,7 @@ fun MyBooksScreen(vm: MyBooksViewModel = viewModel(), navController: NavControll
                                                         }
                                                     }
                                                 ) {
-                                                    Text(text = "追加")
+                                                    Text(text = "登録する")
                                                 }
                                             }
 
