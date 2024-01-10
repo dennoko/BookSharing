@@ -114,7 +114,7 @@ fun MyBooksScreen(vm: MyBooksViewModel = viewModel(), navController: NavControll
         Scaffold(
             floatingActionButton = {
                 // 円形の＋ボタンを表示する. +はIconsのaddを使う.
-                FloatingActionButton(shape = CircleShape, modifier = Modifier.size(80.dp), onClick = { vm.isShowDialog.value = true }) {
+                FloatingActionButton(onClick = { vm.isShowDialog.value = true }) {
                     Icon(
                         Icons.Default.Add,
                         contentDescription = "追加ボタン",
