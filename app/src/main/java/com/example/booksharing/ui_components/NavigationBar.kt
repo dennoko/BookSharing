@@ -5,15 +5,23 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonElevation
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import androidx.compose.ui.unit.dp
@@ -31,15 +39,15 @@ fun NavigationBar(navController: NavController) {
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        NavigateButton(navController, route = "home", txt = "Home", modifier = Modifier
+        NavigateButton(navController, route = "home", txt = "Home", icon = Icons.Default.Home, modifier = Modifier
             .weight(1f)
             .fillMaxHeight()
             .padding(horizontal = 4.dp))
-        NavigateButton(navController, route = "myPage", txt = "MyPage", modifier = Modifier
+        NavigateButton(navController, route = "myPage", txt = "MyPage", icon = Icons.Default.Person, modifier = Modifier
             .weight(1f)
             .fillMaxHeight()
             .padding(horizontal = 4.dp))
-        NavigateButton(navController, route = "setting", txt = "Setting", modifier = Modifier
+        NavigateButton(navController, route = "setting", txt = "Setting", icon = Icons.Default.Settings, modifier = Modifier
             .weight(1f)
             .fillMaxHeight()
             .padding(horizontal = 4.dp))
@@ -47,7 +55,7 @@ fun NavigationBar(navController: NavController) {
 }
 
 @Composable
-fun NavigateButton(navController: NavController, route: String, txt: String, modifier: Modifier = Modifier) {
+fun NavigateButton(navController: NavController, route: String, txt: String, icon :ImageVector, modifier: Modifier = Modifier) {
     Button(
         onClick = { navController.navigate(route) },
         shape = RoundedCornerShape(0.dp),
@@ -60,11 +68,11 @@ fun NavigateButton(navController: NavController, route: String, txt: String, mod
         ),
         modifier = modifier
     ) {
-        Text(
-            text = txt,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.SemiBold,
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
-            )
+        Icon(
+            modifier = Modifier.size(30.dp),
+            tint = MaterialTheme.colorScheme.onPrimary,
+            imageVector = icon,
+            contentDescription = "アイコン"
+        )
     }
 }
