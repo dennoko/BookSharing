@@ -1,13 +1,17 @@
 package com.example.booksharing.screen
 
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +24,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -33,8 +38,10 @@ import com.example.booksharing.room.AppDatabase
 import com.example.booksharing.testData.TestBooksData
 import com.example.booksharing.ui.theme.BookSharingTheme
 import com.example.booksharing.ui_components.BookDisplay
+import com.example.booksharing.ui_components.BookDisplayDetail
 import com.example.booksharing.ui_components.SearchBox
 import com.google.common.collect.ImmutableList
+import com.google.common.math.LinearTransformation.horizontal
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -77,6 +84,7 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .padding(16.dp)
     ) {
         // 本の情報を更新 TODO: テスト用のコードなので、データ取得が実装出来たら置き換え
         LaunchedEffect(Unit) {
@@ -85,39 +93,50 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
 
         // ここに検索ボックスを作成します。
         SearchBox()
+        Spacer(modifier = Modifier.height(8.dp))
 
         // ここから本の情報を表示
         // タグごとに表示するようするので LazyColumn にタグのリストを渡します。
         val tags = tagsList.value ?: emptyList<String>()
 
-        LazyColumn {
-            items(tags.size) {
+        Column(
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+        ) {
+            tags.forEach() {
                 // タグごとの本のリストを取得
                 var books: ImmutableList<detailforapi>? by remember { mutableStateOf(null) }
                 var testBooks: MutableList<detailforapi>? by remember { mutableStateOf(null) }
-                var bool by remember { mutableStateOf(false) }
-
 
                 LaunchedEffect(Unit) {
                     coroutineScope.launch {
                         withContext(Dispatchers.IO) {
-                            books = vm.getBooks(tags[it])
-                            bool = true
+                            books = vm.getBooks(it)
                         }
                     }
                 }
 
                 // タグ名を表示
-                Text(text = tags[it])
+                Text(text = it, fontWeight = FontWeight.SemiBold)
+                Spacer(modifier = Modifier.height(6.dp))
 
                 // LazyRow に本の情報を渡し、表示する
                 LazyRow {
                     if(books != null) {
                         Log.d("hoge", "HomeScreen LazyRow booksData.value != null: ${books}")
                         items(books!!.size) {
-                            // 本の情報を表示
-                            BookDisplay(books!![it])
-                            Spacer(modifier = Modifier.width(8.dp))
+                            Column(
+                                modifier = Modifier
+                                    .clickable {
+                                        // 詳細表示
+                                        vm.selectedBookInfo.value = books!![it]
+                                        vm.isShowBookDetail.value = true
+                                    }
+                            ) {
+                                // 本の情報を表示
+                                BookDisplay(books!![it])
+                                Spacer(modifier = Modifier.width(8.dp))
+                            }
                         }
                     }
                     testBooks = testBooksData()
@@ -126,11 +145,23 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
                         Spacer(modifier = Modifier.width(8.dp))
                     }
                 }
+                Spacer(modifier = Modifier.height(6.dp))
 
                 // 区切り線を表示
                 Divider()
+                Spacer(modifier = Modifier.height(6.dp))
             }
         }
+    }
+
+    // 本の詳細を表示
+    if (vm.isShowBookDetail.value && vm.selectedBookInfo.value != null) {
+        BookDisplayDetail(
+            vm.selectedBookInfo.value!!,
+            clickBack = {
+                vm.isShowBookDetail.value = false
+            }
+        )
     }
 
     // 初回起動時にユーザー情報を入力する画面を表示する

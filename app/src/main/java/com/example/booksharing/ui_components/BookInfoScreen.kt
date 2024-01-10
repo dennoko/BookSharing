@@ -27,7 +27,7 @@ import coil.compose.AsyncImage
 import com.example.booksharing.firestore.detailforapi
 
 @Composable
-fun bookdetaildisplay(detailforapi: detailforapi,navController: NavController){
+fun MyBookDetailDisplay(detailforapi: detailforapi,navController: NavController){
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background

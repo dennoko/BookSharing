@@ -1,5 +1,6 @@
 package com.example.booksharing.ViewModel
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.booksharing.repository.ManageData
@@ -19,6 +20,12 @@ class HomeViewModel: ViewModel() {
     private val db = Firebase.firestore
     // Repository
     private val manageData = ManageData()
+
+    // 書籍の詳細を表示するかを管理する変数
+    var isShowBookDetail = mutableStateOf(false)
+
+    // 書籍の詳細を表示する書籍の情報を格納する変数
+    var selectedBookInfo = mutableStateOf<detailforapi?>(null)
 
     // test data TODO: replace with actual data
     private var _booksList = MutableStateFlow<List<TestBooksData>>(emptyList())
