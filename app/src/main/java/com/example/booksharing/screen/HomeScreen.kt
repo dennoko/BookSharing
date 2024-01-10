@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -30,7 +29,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.booksharing.GoogleBooksAPI.BooksData
 import com.example.booksharing.ViewModel.HomeViewModel
 import com.example.booksharing.firestore.detaildata
 import com.example.booksharing.firestore.detailforapi
@@ -41,13 +39,9 @@ import com.example.booksharing.ui_components.BookDisplay
 import com.example.booksharing.ui_components.BookDisplayDetail
 import com.example.booksharing.ui_components.SearchBox
 import com.google.common.collect.ImmutableList
-import com.google.common.math.LinearTransformation.horizontal
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.internal.immutableListOf
-import okhttp3.internal.toImmutableList
 
 
 @Composable
@@ -122,7 +116,7 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
 
                 // LazyRow に本の情報を渡し、表示する
                 LazyRow {
-                    if(books != null) {
+                    if (books != null) {
                         Log.d("hoge", "HomeScreen LazyRow booksData.value != null: ${books}")
                         items(books!!.size) {
                             Column(
@@ -170,11 +164,11 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
     }
 }
 
-fun testBooksData() : MutableList<detailforapi> {
+fun testBooksData(): MutableList<detailforapi> {
     var booksData: MutableList<detailforapi> = mutableListOf()
 
     //テストのためのロジックを追加
-    for(i in 1..5) {
+    for (i in 1..5) {
         val testBooksData = TestBooksData()
         val detailForApi = detailforapi(
             detail = detaildata(
