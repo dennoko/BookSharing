@@ -22,4 +22,8 @@ interface UserDataDAO {
     // id = 0 のデータを取得する
     @Query("SELECT * FROM UserDataEntity WHERE id = 0")
     suspend fun getUserData(): UserDataEntity
+
+    @Query("SELECT * FROM UserDataEntity WHERE id = 0")
+    fun getUser(): UserDataEntity
+
 }

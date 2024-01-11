@@ -14,7 +14,7 @@ import java.lang.Exception
 
 class ManageData {
     //本を追加
-    fun registBook(owner:String,isbn:String, tag1:String = "", tag2:String = "", tag3:String = "", tag4:String = "", tag5:String = "", db:FirebaseFirestore){
+    fun registBook(owner:String, isbn:String, tag1:String = "", tag2:String = "", tag3:String = "", tag4:String = "", tag5:String = "", db:FirebaseFirestore){
         val book= hashMapOf(
             "isbooked" to false,
             "owner" to owner,
