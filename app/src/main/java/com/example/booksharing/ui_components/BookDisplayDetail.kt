@@ -69,8 +69,6 @@ fun BookDisplayDetail(bookData: detailforapi, clickBack: () -> Unit) {
             contentDescription = null
         )
         Spacer(modifier = Modifier.height(5.dp))
-        Text(text = "所有者：" + bookData.detail.owner)
-        Text(text = "貸出状況:" + bookData.detail.borrower)
         Row(
             modifier = Modifier
                 .horizontalScroll(rememberScrollState())
@@ -97,6 +95,12 @@ fun BookDisplayDetail(bookData: detailforapi, clickBack: () -> Unit) {
                     Spacer(modifier = Modifier.width(5.dp))
                 }
             }
+        }
+        Divider()
+        Text(text = "所有者：" + bookData.detail.owner)
+        Text(text = "貸出状況:" + bookData.detail.borrower)
+        Button(modifier = Modifier.fillMaxWidth(), onClick = { /*予約*/ }) {
+            Text(text = "予約する")
         }
         Divider()
         Text(text = "出版社：" + bookData.item.volumeInfo.publisher)
