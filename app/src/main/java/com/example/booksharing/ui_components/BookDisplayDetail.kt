@@ -43,7 +43,7 @@ import com.example.booksharing.testData.TestBooksData
 import com.example.booksharing.ui.theme.BookSharingTheme
 
 @Composable
-fun BookDisplayDetail(bookData: detailforapi, clickBack: () -> Unit) {
+fun BookDisplayDetail(bookData: detailforapi, reserved: () -> Unit) {
     Column(modifier = Modifier.verticalScroll(rememberScrollState())
     ) {
         Text(
@@ -99,7 +99,7 @@ fun BookDisplayDetail(bookData: detailforapi, clickBack: () -> Unit) {
         Divider()
         Text(text = "所有者：" + bookData.detail.owner)
         Text(text = "貸出状況:" + bookData.detail.borrower)
-        Button(modifier = Modifier.fillMaxWidth(), onClick = { /*予約*/ }) {
+        Button(modifier = Modifier.fillMaxWidth(), onClick = { reserved() }) {
             Text(text = "予約する")
         }
         Divider()

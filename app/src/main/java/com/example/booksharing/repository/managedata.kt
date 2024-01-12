@@ -157,6 +157,15 @@ class ManageData {
         return ImmutableList.copyOf(ownerList.distinct())
     }
 
+    // firestore の brrower に自分の名前を登録する関数
+    fun registBrrower(db: FirebaseFirestore, owner: String, isbn: String, borrower: String) {
+        val bookRef = db.collection("C0de").document(owner + isbn)
+        bookRef.update("borrower", borrower)
+            .addOnFailureListener { e: Exception ->
+                Log.d("methodTest", "registBrrower: error occurred ${e.message} ${e.cause}")
+            }
+    }
+
 
     // 以下はGoogle Books API 用の関数
     // Retrofit のインスタンスを作成

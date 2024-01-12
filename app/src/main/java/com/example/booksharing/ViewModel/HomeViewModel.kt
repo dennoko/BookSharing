@@ -5,9 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.booksharing.repository.ManageData
 import com.example.booksharing.firestore.detailforapi
+import com.example.booksharing.room.AppDatabase
 import com.example.booksharing.testData.TestBooksData
 import com.google.common.collect.ImmutableList
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
@@ -65,6 +67,13 @@ class HomeViewModel: ViewModel() {
     fun getTags() {
         viewModelScope.launch {
             _tagsList.value = manageData.getTagsList(db)
+        }
+    }
+
+    // 本を予約する関数
+    fun registBrowwer(owner: String, isbn: String, borrower: String) {
+        viewModelScope.launch {
+            manageData.registBrrower(db, owner, isbn, borrower)
         }
     }
 }
