@@ -20,6 +20,7 @@ import androidx.work.WorkManager
 import com.example.booksharing.Worker.NotificationWorker
 import com.example.booksharing.screen.HomeScreen
 import com.example.booksharing.screen.MyBooksScreen
+import com.example.booksharing.screen.SettingScreen
 import com.example.booksharing.ui.theme.BookSharingTheme
 import com.example.booksharing.ui_components.NavigationBar
 
@@ -56,8 +57,11 @@ class MainActivity : ComponentActivity() {
                             composable("home") {
                                 HomeScreen(navController = navController)
                             }
-                            composable("mypage"){
+                            composable("mypage") {
                                 MyBooksScreen(navController = navController)
+                            }
+                            composable("setting") {
+                                SettingScreen()
                             }
                         }
                     }

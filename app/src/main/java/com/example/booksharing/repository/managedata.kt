@@ -164,6 +164,7 @@ class ManageData {
 
     // 本の検索結果を返す関数
     suspend fun searchBooks(query: String): BooksData {
+        Log.d("booksAPI", "searchBooks called")
         return apiService.searchBooks(query)
     }
 }
