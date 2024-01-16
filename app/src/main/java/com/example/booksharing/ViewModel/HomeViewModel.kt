@@ -31,9 +31,9 @@ class HomeViewModel: ViewModel() {
     var selectedBookInfo = mutableStateOf<detailforapi?>(null)
 
     // ユーザー名を保持する変数
-    var userName = mutableStateOf("")
+    var userName = ""
 
-    // test data TODO: replace with actual data
+    // test data TODO : replace with actual data
     private var _booksList = MutableStateFlow<List<TestBooksData>>(emptyList())
     val booksList = _booksList.asStateFlow()
     fun getBooksTest() {
@@ -78,7 +78,7 @@ class HomeViewModel: ViewModel() {
     fun registBrowwer(owner: String, isbn: String) {
         Log.d("methodTest", "registBrowwer: owner: ${owner}, isbn: ${isbn}")
         viewModelScope.launch {
-            manageData.registBrrower(db, owner, isbn, userName.value)
+            manageData.registBrrower(db, owner, isbn, userName)
         }
     }
 }
