@@ -3,6 +3,7 @@ package com.example.booksharing.screen
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,6 +26,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
@@ -41,6 +43,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -116,12 +122,32 @@ fun MyBooksScreen(vm: MyBooksViewModel = viewModel(), navController: NavControll
         Scaffold(
             floatingActionButton = {
                 // 円形の＋ボタンを表示する. +はIconsのaddを使う.
-                FloatingActionButton(onClick = { vm.isShowDialog.value = true }) {
+                FloatingActionButton(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                    onClick = { vm.isShowDialog.value = true }
+                ) {
                     Icon(
                         Icons.Default.Add,
                         contentDescription = "追加ボタン",
                     )
                 }
+            },
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text(
+                            text = "Library",
+                            fontSize = 32.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            modifier = Modifier.padding(8.dp)
+                        )
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        titleContentColor = MaterialTheme.colorScheme.onPrimary
+                    ),
+                )
             }
         ) {
             Column(
@@ -130,15 +156,6 @@ fun MyBooksScreen(vm: MyBooksViewModel = viewModel(), navController: NavControll
                     .padding(it)
             ) {
                 // 本の情報を表示
-                Text(
-                    text = "My Books",
-                    fontSize = 32.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(8.dp)
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Divider(thickness = 2.dp)
-
                 if(myBooks.value != null){
                     LazyColumn {
                         items(myBooks.value!!.size) {
@@ -164,7 +181,7 @@ fun MyBooksScreen(vm: MyBooksViewModel = viewModel(), navController: NavControll
                         }
                     },
                     title = {
-                        Text(text = "本を登録する", fontWeight = FontWeight.SemiBold)
+                        Text(text = "本を登録する", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.SemiBold)
                     },
                     text = {
                         Column {
@@ -182,6 +199,11 @@ fun MyBooksScreen(vm: MyBooksViewModel = viewModel(), navController: NavControll
                                     modifier = Modifier
                                         .weight(1f),
                                     singleLine = true,
+                                    shape = RoundedCornerShape(15.dp),
+                                    colors = TextFieldDefaults.textFieldColors(
+                                        unfocusedIndicatorColor = Color.Transparent,
+                                        focusedIndicatorColor = Color.Transparent
+                                    ),
                                     trailingIcon = { // 本の検索ボタン
                                         IconButton(
                                             onClick = {

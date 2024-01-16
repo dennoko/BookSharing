@@ -49,21 +49,21 @@ fun NavigationBar(navController: NavController) {
         NavigateTab(
             navController = navController,
             route = "home",
-            txt = "ホーム",
+            txt = "Home",
             icon = Icons.Default.Home,
             onClick = { selectedTabIndex = 0 }
         )
         NavigateTab(
             navController = navController,
             route = "myPage",
-            txt = "本を管理",
+            txt = "My Page",
             icon = Icons.Default.Person,
             onClick = { selectedTabIndex = 1 }
         )
         NavigateTab(
             navController = navController,
             route = "setting",
-            txt = "設定",
+            txt = "Setting",
             icon = Icons.Default.Settings,
             onClick = { selectedTabIndex = 2 }
         )
