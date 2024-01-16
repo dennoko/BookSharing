@@ -1,6 +1,7 @@
 package com.example.booksharing.screen
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -178,7 +179,13 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
                                 isbn = it.identifier,
                                 borrower = userName
                             )
+
+                            // トーストを表示
+                            Toast.makeText(context, "予約しました", Toast.LENGTH_SHORT).show()
                         }
+                    } ?: run{
+                        // トーストを表示
+                        Toast.makeText(context, "予約に失敗しました", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
