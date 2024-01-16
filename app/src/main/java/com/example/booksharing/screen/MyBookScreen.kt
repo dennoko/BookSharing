@@ -199,6 +199,11 @@ fun MyBooksScreen(vm: MyBooksViewModel = viewModel(), navController: NavControll
                                     modifier = Modifier
                                         .weight(1f),
                                     singleLine = true,
+                                    shape = RoundedCornerShape(15.dp),
+                                    colors = TextFieldDefaults.textFieldColors(
+                                        unfocusedIndicatorColor = Color.Transparent,
+                                        focusedIndicatorColor = Color.Transparent
+                                    ),
                                     trailingIcon = { // 本の検索ボタン
                                         IconButton(
                                             onClick = {
