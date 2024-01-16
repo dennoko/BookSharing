@@ -43,12 +43,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     Scaffold(
                         bottomBar = {
-                            BottomAppBar(
-                                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                                modifier = Modifier
-                                    .height(56.dp)
-                            ) {
+                            BottomAppBar() {
                                 NavigationBar(navController)
                             }
                         }
