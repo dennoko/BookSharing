@@ -164,6 +164,9 @@ class ManageData {
             .addOnFailureListener { e: Exception ->
                 Log.d("methodTest", "registBrrower: error occurred ${e.message} ${e.cause}")
             }
+            .addOnFailureListener { e: Exception ->
+                Log.d("methodTest", "registBrrower: error occurred ${e.message} ${e.cause}")
+            }
     }
 
 
