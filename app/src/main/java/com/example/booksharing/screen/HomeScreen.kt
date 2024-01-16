@@ -65,19 +65,13 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
     // Room のインスタンスを作成
     val db = AppDatabase.getDB(context)
 
-    // ユーザーネームを保持する変数
-    var userName = ""
-
     // room の id = 0 に保存されたデータがあるかどうかを確認し、なければユーザー情報を入力する画面を表示する. また、画面に表示する情報を取得する.
     var isShowInputUserInfoScreen by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
         coroutineScope.launch {
             val userData = db.userDataDao().getUserData()
-            if (userData == null) {
-                isShowInputUserInfoScreen = true
-            } else {
-                userName = userData.userName!!
-            }
+            Log.d("methodTest", "HomeScreen: ${userData}")
+            vm.userName.value = userData.userName!!
 
             // 画面に表示する情報の取得
             vm.getTags()
@@ -169,21 +163,28 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
                 }
             },
             text = {
-                BookDisplayDetail(bookData = vm.selectedBookInfo.value!!) {
-                    // 予約ボタンを押した時の処理
-                    vm.selectedBookInfo.value!!.item.volumeInfo.industryIdentifiers?.get(0)?.let {
-                        if(userName != "") {
-                            vm.registBrowwer(
-                                owner = vm.selectedBookInfo.value!!.detail.owner,
-                                isbn = it.identifier,
-                                borrower = userName
-                            )
+                BookDisplayDetail(
+                    bookData = vm.selectedBookInfo.value!!,
+                    reserved = {
+                        // 予約ボタンを押した時の処理
+                        vm.selectedBookInfo.value!!.item.volumeInfo.industryIdentifiers?.get(0)?.let {
+                            Log.d("methodTest", "HomeScreen: ${it.identifier}")
+                            if(vm.userName.value != "") {
+                                Log.d("methodTest", "HomeScreen: ${vm.selectedBookInfo.value!!.detail.owner}")
+                                vm.registBrowwer(
+                                    owner = vm.selectedBookInfo.value!!.detail.owner,
+                                    isbn = it.identifier,
+                                )
+                            }
                         }
                     }
-                }
+                )
             }
         )
     }
+
+    // Todo：後で消す
+    // TestScreen()
 
     // 初回起動時にユーザー情報を入力する画面を表示する
     if (isShowInputUserInfoScreen) {

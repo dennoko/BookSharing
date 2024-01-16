@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         // WorkManagerの設定
-        val workRequest = PeriodicWorkRequest.Builder(NotificationWorker::class.java, 3, java.util.concurrent.TimeUnit.HOURS).build()
+        val workRequest = PeriodicWorkRequest.Builder(NotificationWorker::class.java, 15, java.util.concurrent.TimeUnit.MINUTES).build()
         WorkManager.getInstance(this).enqueue(workRequest)
 
         setContent {
