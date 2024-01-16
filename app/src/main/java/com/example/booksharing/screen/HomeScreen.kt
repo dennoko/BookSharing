@@ -74,11 +74,8 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
     LaunchedEffect(Unit) {
         coroutineScope.launch {
             val userData = db.userDataDao().getUserData()
-            if (userData == null) {
-                isShowInputUserInfoScreen = true
-            } else {
-                userName = userData.userName!!
-            }
+            Log.d("methodTest", "HomeScreen: ${userData}")
+            vm.userName.value = userData.userName!!
 
             // 画面に表示する情報の取得
             vm.getTags()
@@ -170,24 +167,27 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
                 }
             },
             text = {
-                BookDisplayDetail(bookData = vm.selectedBookInfo.value!!) {
-                    // 予約ボタンを押した時の処理
-                    vm.selectedBookInfo.value!!.item.volumeInfo.industryIdentifiers?.get(0)?.let {
-                        if(userName != "") {
-                            vm.registBrowwer(
-                                owner = vm.selectedBookInfo.value!!.detail.owner,
-                                isbn = it.identifier,
-                                borrower = userName
-                            )
+                BookDisplayDetail(
+                    bookData = vm.selectedBookInfo.value!!,
+                    reserved = {
+                        // 予約ボタンを押した時の処理
+                        vm.selectedBookInfo.value!!.item.volumeInfo.industryIdentifiers?.get(0)?.let {
+                            Log.d("methodTest", "HomeScreen: ${it.identifier}")
+                            if(vm.userName.value != "") {
+                                Log.d("methodTest", "HomeScreen: ${vm.selectedBookInfo.value!!.detail.owner}")
+                                vm.registBrowwer(
+                                    owner = vm.selectedBookInfo.value!!.detail.owner,
+                                    isbn = it.identifier,
+                                )
 
-                            // トーストを表示
-                            Toast.makeText(context, "予約しました", Toast.LENGTH_SHORT).show()
+                                // トーストを表示
+                                Toast.makeText(context, "予約しました", Toast.LENGTH_SHORT).show()
+                            }
+                        } ?: run {
+                            Toast.makeText(context, "予約に失敗しました", Toast.LENGTH_SHORT).show()
                         }
-                    } ?: run{
-                        // トーストを表示
-                        Toast.makeText(context, "予約に失敗しました", Toast.LENGTH_SHORT).show()
                     }
-                }
+                )
             }
         )
     }

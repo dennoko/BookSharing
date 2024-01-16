@@ -9,7 +9,6 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
 class NotificationWorker(appContext: Context, workerParameters: WorkerParameters): CoroutineWorker(appContext, workerParameters) {
-    val db = Firebase.firestore
     val workerRepository = WorkerRepository(appContext)
     override suspend fun doWork(): Result {
         return try {
