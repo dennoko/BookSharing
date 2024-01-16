@@ -1,5 +1,6 @@
 package com.example.booksharing.ui_components
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -19,6 +20,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -57,7 +60,9 @@ fun NavigationBar(navController: NavController) {
 @Composable
 fun NavigateButton(navController: NavController, route: String, txt: String, icon :ImageVector, modifier: Modifier = Modifier) {
     Button(
-        onClick = { navController.navigate(route) },
+        onClick = { if (navController.currentDestination!!.route != route) {
+            navController.navigate(route)
+        } },
         shape = RoundedCornerShape(0.dp),
         elevation = ButtonDefaults.buttonElevation(
             defaultElevation = 15.dp,
