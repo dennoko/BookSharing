@@ -1,5 +1,6 @@
 package com.example.booksharing.ViewModel
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -75,6 +76,7 @@ class HomeViewModel: ViewModel() {
 
     // 本を予約する関数
     fun registBrowwer(owner: String, isbn: String) {
+        Log.d("methodTest", "registBrowwer: owner: ${owner}, isbn: ${isbn}")
         viewModelScope.launch {
             manageData.registBrrower(db, owner, isbn, userName.value)
         }

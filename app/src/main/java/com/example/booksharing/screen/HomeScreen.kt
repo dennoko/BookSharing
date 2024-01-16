@@ -1,6 +1,7 @@
 package com.example.booksharing.screen
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -64,6 +65,9 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
 
     // Room のインスタンスを作成
     val db = AppDatabase.getDB(context)
+
+    // ユーザーネームを保持する変数
+    var userName = ""
 
     // room の id = 0 に保存されたデータがあるかどうかを確認し、なければユーザー情報を入力する画面を表示する. また、画面に表示する情報を取得する.
     var isShowInputUserInfoScreen by remember { mutableStateOf(false) }
@@ -175,16 +179,18 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
                                     owner = vm.selectedBookInfo.value!!.detail.owner,
                                     isbn = it.identifier,
                                 )
+
+                                // トーストを表示
+                                Toast.makeText(context, "予約しました", Toast.LENGTH_SHORT).show()
                             }
+                        } ?: run {
+                            Toast.makeText(context, "予約に失敗しました", Toast.LENGTH_SHORT).show()
                         }
                     }
                 )
             }
         )
     }
-
-    // Todo：後で消す
-    // TestScreen()
 
     // 初回起動時にユーザー情報を入力する画面を表示する
     if (isShowInputUserInfoScreen) {

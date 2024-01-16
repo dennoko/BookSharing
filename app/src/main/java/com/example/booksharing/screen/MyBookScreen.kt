@@ -1,6 +1,7 @@
 package com.example.booksharing.screen
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -82,6 +83,7 @@ import kotlinx.coroutines.withContext
 fun MyBooksScreen(vm: MyBooksViewModel = viewModel(), navController: NavController) {
     val userDB = AppDatabase.getDB(LocalContext.current)
     val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     // 自分の本のリストとタグのリストを取得する
     LaunchedEffect(Unit) {
@@ -186,7 +188,7 @@ fun MyBooksScreen(vm: MyBooksViewModel = viewModel(), navController: NavControll
                                                 if(vm.keyWord.value != "") {
                                                     vm.searchBooks()
                                                 } else {
-                                                    // Todo: 検索ワードが入力されていないことをユーザーに伝える
+                                                    Toast.makeText(context, "検索ワードを入力してください", Toast.LENGTH_SHORT).show()
                                                 }
 
                                                 coroutineScope.launch {
@@ -284,7 +286,7 @@ fun MyBooksScreen(vm: MyBooksViewModel = viewModel(), navController: NavControll
                                                     onClick = {
                                                         // isbn がない場合は、追加できないようにする
                                                         if(searchedBooks.value!!.items[it].volumeInfo.industryIdentifiers == null) {
-                                                            // TODO: ISBN が無く、追加できないことをユーザーに伝える
+                                                            Toast.makeText(context, "ISBNがありません", Toast.LENGTH_SHORT).show()
                                                             return@Button
                                                         } else {
                                                             // 追加する本のデータを含むdetailforapiを作成する
