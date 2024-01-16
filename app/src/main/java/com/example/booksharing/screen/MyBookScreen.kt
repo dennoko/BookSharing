@@ -44,6 +44,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -133,11 +134,12 @@ fun MyBooksScreen(vm: MyBooksViewModel = viewModel(), navController: NavControll
                 }
             },
             topBar = {
-                CenterAlignedTopAppBar(
+                TopAppBar(
                     title = {
                         Text(
                             text = "Library",
                             fontSize = 32.sp,
+                            fontWeight = FontWeight.SemiBold,
                             modifier = Modifier.padding(8.dp)
                         )
                     },
