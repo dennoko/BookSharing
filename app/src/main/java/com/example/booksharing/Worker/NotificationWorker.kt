@@ -31,6 +31,9 @@ class NotificationWorker(appContext: Context, workerParameters: WorkerParameters
                 val booksJson = Gson().toJson(books)
                 outputData = workDataOf("preData" to booksJson)
 
+                // bookTitle
+                val borrowers = books.map { it.split(" ")[0] }
+
                 // preDataと比較して、追加された要素を取得
                 val addedBooks = books.filter { !preData.contains(it) }
                 Log.d("notificationTest", "追加されたデータ：${addedBooks}")
@@ -38,7 +41,7 @@ class NotificationWorker(appContext: Context, workerParameters: WorkerParameters
                 // 差分がある場合は通知を送る
                 if(addedBooks.isNotEmpty()) {
                     // 通知を送る
-                    workerRepository.sendNotification(applicationContext, "あなたの本が予約されました")
+                    workerRepository.sendNotification(applicationContext, "予約者：${borrowers}")
                     Log.d("notificationTest", "通知を送りました(1)")
                 }
             } else {
@@ -48,8 +51,11 @@ class NotificationWorker(appContext: Context, workerParameters: WorkerParameters
                 outputData = workDataOf("preData" to Gson().toJson(books))
                 Log.d("notificationTest", "保存したデータ：${outputData}")
 
+                // bookTitle
+                val borrowers = books.map { it.split(" ")[0] }
+
                 // 通知を送る
-                workerRepository.sendNotification(applicationContext, "あなたの本が予約されています")
+                workerRepository.sendNotification(applicationContext, "予約者：${borrowers}")
                 Log.d("notificationTest", "通知を送りました(2)")
             }
 
