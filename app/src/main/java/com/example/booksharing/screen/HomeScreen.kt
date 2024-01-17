@@ -75,7 +75,13 @@ fun HomeScreen(vm: HomeViewModel = viewModel(), navController: NavController) {
         coroutineScope.launch {
             val userData = db.userDataDao().getUserData()
             Log.d("methodTest", "HomeScreen: ${userData}")
-            vm.userName.value = userData.userName!!
+            if (userData == null) {
+                // ユーザー情報を入力する画面を表示する
+                isShowInputUserInfoScreen = true
+            } else {
+                // ユーザー情報を取得
+                vm.userName.value = userData.userName!!
+            }
 
             // 画面に表示する情報の取得
             vm.getTags()
