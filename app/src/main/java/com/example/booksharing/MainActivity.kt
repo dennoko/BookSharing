@@ -27,9 +27,11 @@ import com.example.booksharing.ui_components.NavigationBar
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // 以前のワークをキャンセル
+        WorkManager.getInstance(this).cancelAllWorkByTag("bookSharing")
 
         // WorkManagerの設定
-        val workRequest = PeriodicWorkRequest.Builder(NotificationWorker::class.java, 15, java.util.concurrent.TimeUnit.MINUTES).build()
+        val workRequest = PeriodicWorkRequest.Builder(NotificationWorker::class.java, 18000000, java.util.concurrent.TimeUnit.MILLISECONDS).addTag("bookSharing").build()
         WorkManager.getInstance(this).enqueue(workRequest)
 
         setContent {
